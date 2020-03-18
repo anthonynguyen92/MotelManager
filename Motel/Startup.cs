@@ -1,8 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Motel.Data;
+using Motel.Models;
+using System.Collections.Specialized;
 
 namespace Motel
 {
@@ -11,6 +17,7 @@ namespace Motel
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -19,6 +26,30 @@ namespace Motel
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<ApplicationDBcontext>(option =>
+                option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+            );
+
+            services.AddSingleton<ApplicationUser>();
+
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.Cookie.Name = "Identity.Cookie";
+                config.LoginPath = "/Home/SignIn";
+            });
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+            {
+                config.Password.RequireDigit = true;
+                config.Password.RequireLowercase = true;
+                config.Password.RequireNonAlphanumeric = false;
+                config.Password.RequiredLength = 8;
+
+            }).AddEntityFrameworkStores<ApplicationDBcontext>().AddDefaultTokenProviders();
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,13 +78,9 @@ namespace Motel
             app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllerRoute(
-                        name: "Admin",
-                        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-                    endpoints.MapControllerRoute(
                         name: "default",
-                        pattern: "{Controller= Home}/{action =Index}/{id?}"
-                        );
+                        pattern: "{Controller=Home}/{action=Index}/{id?}");
+
                 }
             );
 
