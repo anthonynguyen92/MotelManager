@@ -3,5 +3,17 @@
     ViewData["Title"] = "SignIn";
 }
 
-<h1>LogIn</h1>
-
+<h2>LogIn</h2>
+<div class="col-sm-4">
+    <form class="form-group" asp-controller="Account" method="post" asp-action="Login">
+        <div class="form-control">
+            <label class="text-dark">User Name: </label>
+            <input type="text" name="username" value="" />
+        </div>
+        <div class="form-control">
+            <label class="text-dark">Password: </label>
+            <input type="password" name="password" value="" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
