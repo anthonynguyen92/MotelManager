@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Motel.Data;
 using Motel.Models;
 using System.Collections.Specialized;
 
@@ -26,30 +25,6 @@ namespace Motel
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            services.AddDbContext<ApplicationDBcontext>(option =>
-                option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-            );
-
-            services.AddSingleton<ApplicationUser>();
-
-            services.ConfigureApplicationCookie(config =>
-            {
-                config.Cookie.Name = "Identity.Cookie";
-                config.LoginPath = "/Home/SignIn";
-            });
-
-            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
-            {
-                config.Password.RequireDigit = true;
-                config.Password.RequireLowercase = true;
-                config.Password.RequireNonAlphanumeric = false;
-                config.Password.RequiredLength = 8;
-
-            }).AddEntityFrameworkStores<ApplicationDBcontext>().AddDefaultTokenProviders();
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

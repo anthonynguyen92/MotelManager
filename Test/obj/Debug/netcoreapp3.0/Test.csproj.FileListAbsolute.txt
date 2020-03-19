@@ -1,0 +1,10 @@
+D:\Project\MotelManager\Test\bin\Debug\netcoreapp3.0\Test.deps.json
+D:\Project\MotelManager\Test\bin\Debug\netcoreapp3.0\Test.dll
+D:\Project\MotelManager\Test\obj\Debug\netcoreapp3.0\Test.csprojAssemblyReference.cache
+D:\Project\MotelManager\Test\obj\Debug\netcoreapp3.0\Test.AssemblyInfoInputs.cache
+D:\Project\MotelManager\Test\obj\Debug\netcoreapp3.0\Test.AssemblyInfo.cs
+D:\Project\MotelManager\Test\bin\Debug\netcoreapp3.0\Test.runtimeconfig.json
+D:\Project\MotelManager\Test\bin\Debug\netcoreapp3.0\Test.runtimeconfig.dev.json
+D:\Project\MotelManager\Test\bin\Debug\netcoreapp3.0\Test.pdb
+D:\Project\MotelManager\Test\obj\Debug\netcoreapp3.0\Test.dll
+D:\Project\MotelManager\Test\obj\Debug\netcoreapp3.0\Test.pdb

@@ -147,6 +147,4 @@ D:\Project\MotelManager\Motel\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Ident
 D:\Project\MotelManager\Motel\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Identity.Core.dll
 D:\Project\MotelManager\Motel\bin\Debug\netcoreapp3.0\Microsoft.Extensions.Identity.Stores.dll
 D:\Project\MotelManager\Motel\obj\Debug\netcoreapp3.0\Motel.MvcApplicationPartsAssemblyInfo.cache
-D:\Project\MotelManager\Motel\obj\Debug\netcoreapp3.0\Razor\Views\Account\Login.cshtml.g.cs
-D:\Project\MotelManager\Motel\obj\Debug\netcoreapp3.0\Razor\Views\Account\Register.cshtml.g.cs
 D:\Project\MotelManager\Motel\obj\Debug\netcoreapp3.0\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
