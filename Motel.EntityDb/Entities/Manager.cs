@@ -8,6 +8,7 @@ namespace Motel.EntityDb.Entities
 {
     public class Manager
     {
+        public Guid ID { get; set; }
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }

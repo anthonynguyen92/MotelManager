@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Motel.EntityDb.Configuration;
 using Motel.EntityDb.Entities;
+using Motel.EntityDb.Extensions;
 
 namespace Motel.EntityDb.EF
 {
@@ -23,7 +24,8 @@ namespace Motel.EntityDb.EF
             modelBuilder.ApplyConfiguration(new CustomerConfiguration());
             modelBuilder.ApplyConfiguration(new InforBillConfiguration());
             modelBuilder.ApplyConfiguration(new ManagerConfiguration());
-            base.OnModelCreating(modelBuilder);
+            //base.OnModelCreating(modelBuilder);
+            modelBuilder.Seed();
         }
     }
 }

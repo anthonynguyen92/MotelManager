@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Motel.EntityDb.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace Motel.EntityDb.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    IDuser = table.Column<string>(nullable: false),
+                    IDuser = table.Column<Guid>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     Sex = table.Column<string>(nullable: true),
@@ -19,8 +19,7 @@ namespace Motel.EntityDb.Migrations
                     Address = table.Column<string>(nullable: false),
                     PhoneNumber = table.Column<string>(nullable: false),
                     Identification = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
-                    Room = table.Column<int>(nullable: true)
+                    Email = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,7 +30,8 @@ namespace Motel.EntityDb.Migrations
                 name: "Managers",
                 columns: table => new
                 {
-                    Username = table.Column<string>(nullable: false),
+                    ID = table.Column<Guid>(nullable: false),
+                    Username = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     Lastname = table.Column<string>(nullable: true),
@@ -39,7 +39,7 @@ namespace Motel.EntityDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Managers", x => x.Username);
+                    table.PrimaryKey("PK_Managers", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,8 +52,7 @@ namespace Motel.EntityDb.Migrations
                     Toilet = table.Column<int>(nullable: false),
                     Area = table.Column<int>(nullable: false),
                     Status = table.Column<bool>(nullable: false),
-                    Payment = table.Column<decimal>(nullable: false),
-                    RoomRent = table.Column<int>(nullable: true)
+                    Payment = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,58 +70,64 @@ namespace Motel.EntityDb.Migrations
                     WifiBill = table.Column<decimal>(nullable: false),
                     ParkingFee = table.Column<decimal>(nullable: false),
                     RoomBil = table.Column<decimal>(nullable: false),
-                    IDRoom = table.Column<Guid>(nullable: true)
+                    MotelRoomid = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InforBills", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_InforBills_MotelRooms_IDRoom",
-                        column: x => x.IDRoom,
+                        name: "FK_InforBills_MotelRooms_MotelRoomid",
+                        column: x => x.MotelRoomid,
                         principalTable: "MotelRooms",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Rents",
                 columns: table => new
                 {
-                    IdRent = table.Column<string>(nullable: false),
+                    IdRent = table.Column<Guid>(nullable: false),
                     Start = table.Column<DateTime>(nullable: false),
                     End = table.Column<DateTime>(nullable: true),
-                    MotelRoomid = table.Column<Guid>(nullable: true),
-                    IDRoom = table.Column<Guid>(nullable: true),
-                    IDuser = table.Column<int>(nullable: true)
+                    FKMotel = table.Column<Guid>(nullable: true),
+                    FKCustomer = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rents", x => x.IdRent);
                     table.ForeignKey(
-                        name: "FK_Rents_Customers_IdRent",
-                        column: x => x.IdRent,
+                        name: "FK_Rents_Customers_FKCustomer",
+                        column: x => x.FKCustomer,
                         principalTable: "Customers",
                         principalColumn: "IDuser",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Rents_MotelRooms_MotelRoomid",
-                        column: x => x.MotelRoomid,
+                        name: "FK_Rents_MotelRooms_FKMotel",
+                        column: x => x.FKMotel,
                         principalTable: "MotelRooms",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_InforBills_IDRoom",
+                name: "IX_InforBills_MotelRoomid",
                 table: "InforBills",
-                column: "IDRoom");
+                column: "MotelRoomid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rents_MotelRoomid",
+                name: "IX_Rents_FKCustomer",
                 table: "Rents",
-                column: "MotelRoomid",
+                column: "FKCustomer",
                 unique: true,
-                filter: "[MotelRoomid] IS NOT NULL");
+                filter: "[FKCustomer] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rents_FKMotel",
+                table: "Rents",
+                column: "FKMotel",
+                unique: true,
+                filter: "[FKMotel] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

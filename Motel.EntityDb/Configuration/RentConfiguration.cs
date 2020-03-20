@@ -10,7 +10,6 @@ namespace Motel.EntityDb.Configuration
         {
             builder.HasOne(r => r.MotelRoom).WithOne(m => m.Rent);
             builder.HasOne(r => r.Customer).WithOne(c => c.Rent);
-            builder.HasKey(r => r.IdRent);
         }
     }
 }

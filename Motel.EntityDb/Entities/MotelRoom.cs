@@ -7,7 +7,6 @@ namespace Motel.EntityDb.Entities
 {
     public class MotelRoom
     {
-        [Key]
         public Guid id { get; set; }
         public String NameRoom { get; set; }
         [Required]
@@ -19,7 +18,6 @@ namespace Motel.EntityDb.Entities
         public bool Status { get; set; }
         [Required]
         public decimal Payment { get; set; }
-        [ForeignKey("RoomRent")]
         public virtual Rent Rent { get; set; }
         public virtual List<InforBill> InforBills { get; set; }
     }

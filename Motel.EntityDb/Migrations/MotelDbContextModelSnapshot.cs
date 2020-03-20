@@ -21,8 +21,9 @@ namespace Motel.EntityDb.Migrations
 
             modelBuilder.Entity("Motel.EntityDb.Entities.Customer", b =>
                 {
-                    b.Property<string>("IDuser")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("IDuser")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -51,9 +52,6 @@ namespace Motel.EntityDb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Room")
-                        .HasColumnType("int");
-
                     b.Property<string>("Sex")
                         .HasColumnType("nvarchar(max)");
 
@@ -71,11 +69,11 @@ namespace Motel.EntityDb.Migrations
                     b.Property<decimal>("ElectricBill")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid?>("IDRoom")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("MonthRent")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("MotelRoomid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("ParkingFee")
                         .HasColumnType("decimal(18,2)");
@@ -91,15 +89,16 @@ namespace Motel.EntityDb.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IDRoom");
+                    b.HasIndex("MotelRoomid");
 
                     b.ToTable("InforBills");
                 });
 
             modelBuilder.Entity("Motel.EntityDb.Entities.Manager", b =>
                 {
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
@@ -114,7 +113,10 @@ namespace Motel.EntityDb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Username");
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
 
                     b.ToTable("Managers");
                 });
@@ -137,9 +139,6 @@ namespace Motel.EntityDb.Migrations
                     b.Property<decimal>("Payment")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("RoomRent")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -153,19 +152,17 @@ namespace Motel.EntityDb.Migrations
 
             modelBuilder.Entity("Motel.EntityDb.Entities.Rent", b =>
                 {
-                    b.Property<string>("IdRent")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("IdRent")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("End")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("IDRoom")
+                    b.Property<Guid?>("FKCustomer")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("IDuser")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("MotelRoomid")
+                    b.Property<Guid?>("FKMotel")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Start")
@@ -173,9 +170,13 @@ namespace Motel.EntityDb.Migrations
 
                     b.HasKey("IdRent");
 
-                    b.HasIndex("MotelRoomid")
+                    b.HasIndex("FKCustomer")
                         .IsUnique()
-                        .HasFilter("[MotelRoomid] IS NOT NULL");
+                        .HasFilter("[FKCustomer] IS NOT NULL");
+
+                    b.HasIndex("FKMotel")
+                        .IsUnique()
+                        .HasFilter("[FKMotel] IS NOT NULL");
 
                     b.ToTable("Rents");
                 });
@@ -184,20 +185,20 @@ namespace Motel.EntityDb.Migrations
                 {
                     b.HasOne("Motel.EntityDb.Entities.MotelRoom", "MotelRoom")
                         .WithMany("InforBills")
-                        .HasForeignKey("IDRoom");
+                        .HasForeignKey("MotelRoomid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Motel.EntityDb.Entities.Rent", b =>
                 {
                     b.HasOne("Motel.EntityDb.Entities.Customer", "Customer")
                         .WithOne("Rent")
-                        .HasForeignKey("Motel.EntityDb.Entities.Rent", "IdRent")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Motel.EntityDb.Entities.Rent", "FKCustomer");
 
                     b.HasOne("Motel.EntityDb.Entities.MotelRoom", "MotelRoom")
                         .WithOne("Rent")
-                        .HasForeignKey("Motel.EntityDb.Entities.Rent", "MotelRoomid");
+                        .HasForeignKey("Motel.EntityDb.Entities.Rent", "FKMotel");
                 });
 #pragma warning restore 612, 618
         }

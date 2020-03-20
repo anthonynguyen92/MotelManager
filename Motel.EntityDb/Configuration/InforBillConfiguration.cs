@@ -8,7 +8,6 @@ namespace Motel.EntityDb.Configuration
     {
         public void Configure(EntityTypeBuilder<InforBill> builder)
         {
-            builder.HasKey(i => i.Id);
         }
     }
 }

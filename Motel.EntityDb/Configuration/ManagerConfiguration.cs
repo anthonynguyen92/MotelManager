@@ -8,7 +8,6 @@ namespace Motel.EntityDb.Configuration
     {
         public void Configure(EntityTypeBuilder<Manager> builder)
         {
-            builder.HasKey(m => m.Username);
             builder.Property(m => m.Password).IsRequired();
         }
     }

@@ -9,7 +9,8 @@ namespace Motel.EntityDb.Entities
 {
     public class Customer
     {
-        public string IDuser { get; set; }
+        [Key]
+        public Guid IDuser { get; set; }
         [Required]
         public String FirstName { get; set; }
         [Required]
@@ -24,7 +25,6 @@ namespace Motel.EntityDb.Entities
         [EmailAddress]
         [Required]
         public String Email { get; set; }
-        [ForeignKey("Room")]
         public virtual Rent Rent { get; set; }
     }
 }

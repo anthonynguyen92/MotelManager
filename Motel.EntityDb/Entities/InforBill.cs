@@ -13,7 +13,6 @@ namespace Motel.EntityDb.Entities
         public decimal WifiBill { get; set; }
         public decimal ParkingFee { get; set; }
         public decimal RoomBil { get; set; }
-        [ForeignKey("IDRoom")]
         public virtual MotelRoom MotelRoom { get; set; }
 
     }
