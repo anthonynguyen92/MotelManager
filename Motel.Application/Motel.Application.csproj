@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Category\Customer\" />
+    <Folder Include="Category\RoomMotel\" />
+    <Folder Include="Category\UserManager\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Motel.EntityDb\Motel.EntityDb.csproj" />
+  </ItemGroup>
+
+</Project>
