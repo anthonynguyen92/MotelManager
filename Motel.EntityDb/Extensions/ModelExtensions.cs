@@ -10,17 +10,6 @@ namespace Motel.EntityDb.Extensions
     {
         public static void Seed(this ModelBuilder builder)
         {
-            var manager = new Manager
-            {
-                ID = Guid.NewGuid(),
-                Birthday = Convert.ToDateTime("5/5/1999"),
-                FirstName = "Anthony",
-                Lastname = "Nguyen",
-                Username = "Duong",
-                Password = "Thuythuy1",
-            };
-            builder.Entity<Manager>().HasData(manager);
-
             var customer = new Customer
             {
                 Address = "Ho Chi Minh",
