@@ -53,7 +53,7 @@ namespace Motel.EntityDb.Extensions
                 WaterBill = 1,
                 WifiBill = 1,
             };
-            //builder.Entity<InforBill>().HasData(infor);
+            builder.Entity<InforBill>().HasData(infor);
         }
     }
 }

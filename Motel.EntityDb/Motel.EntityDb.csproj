@@ -19,6 +19,8 @@
     <Compile Remove="Migrations\20200320095105_SeedData.Designer.cs" />
     <Compile Remove="Migrations\20200321055007_IdentityCore.cs" />
     <Compile Remove="Migrations\20200321055007_IdentityCore.Designer.cs" />
+    <Compile Remove="Migrations\20200321055204_AspNetIdentity.cs" />
+    <Compile Remove="Migrations\20200321055204_AspNetIdentity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

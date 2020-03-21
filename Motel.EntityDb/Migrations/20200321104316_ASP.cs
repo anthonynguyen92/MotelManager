@@ -3,11 +3,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Motel.EntityDb.Migrations
 {
-    public partial class AspNetIdentity : Migration
+    public partial class ASP : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            
+            migrationBuilder.DropForeignKey(
+                name: "FK_InforBills_MotelRooms_MotelRoomid",
+                table: "InforBills");
+
+            migrationBuilder.DropTable(
+                name: "Managers");
+
+            migrationBuilder.AlterColumn<Guid>(
+                name: "MotelRoomid",
+                table: "InforBills",
+                nullable: true,
+                oldClrType: typeof(Guid),
+                oldType: "uniqueidentifier");
 
             migrationBuilder.CreateTable(
                 name: "AppRoleClaim",
@@ -121,10 +133,22 @@ namespace Motel.EntityDb.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_InforBills_MotelRooms_MotelRoomid",
+                table: "InforBills",
+                column: "MotelRoomid",
+                principalTable: "MotelRooms",
+                principalColumn: "id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_InforBills_MotelRooms_MotelRoomid",
+                table: "InforBills");
+
             migrationBuilder.DropTable(
                 name: "AppRoleClaim");
 
@@ -146,6 +170,14 @@ namespace Motel.EntityDb.Migrations
             migrationBuilder.DropTable(
                 name: "Users");
 
+            migrationBuilder.AlterColumn<Guid>(
+                name: "MotelRoomid",
+                table: "InforBills",
+                type: "uniqueidentifier",
+                nullable: false,
+                oldClrType: typeof(Guid),
+                oldNullable: true);
+
             migrationBuilder.CreateTable(
                 name: "Managers",
                 columns: table => new
@@ -161,6 +193,14 @@ namespace Motel.EntityDb.Migrations
                 {
                     table.PrimaryKey("PK_Managers", x => x.ID);
                 });
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_InforBills_MotelRooms_MotelRoomid",
+                table: "InforBills",
+                column: "MotelRoomid",
+                principalTable: "MotelRooms",
+                principalColumn: "id",
+                onDelete: ReferentialAction.Cascade);
         }
     }
 }

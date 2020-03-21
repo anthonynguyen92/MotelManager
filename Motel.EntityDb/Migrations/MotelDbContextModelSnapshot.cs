@@ -257,7 +257,7 @@ namespace Motel.EntityDb.Migrations
                     b.Property<int>("MonthRent")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("MotelRoomid")
+                    b.Property<Guid?>("MotelRoomid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("ParkingFee")
@@ -343,9 +343,7 @@ namespace Motel.EntityDb.Migrations
                 {
                     b.HasOne("Motel.EntityDb.Entities.MotelRoom", "MotelRoom")
                         .WithMany("InforBills")
-                        .HasForeignKey("MotelRoomid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MotelRoomid");
                 });
 
             modelBuilder.Entity("Motel.EntityDb.Entities.Rent", b =>
