@@ -6,5 +6,6 @@ namespace Motel.Application.Category.BillPayment.Dtos
 {
     public class BillPaymentDelete
     {
+        public Guid Id { get; set; }
     }
 }

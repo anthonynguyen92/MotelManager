@@ -17,22 +17,53 @@ namespace Motel.Application.Category.BillPayment
             _context = context;
         }
 
+        // this's api dont have motelroomid and u must add.
         public async Task<int> Create(BillPaymentCreate create)
         {
+
             var bill = new InforBill()
             {
-                //MotelRoom = create.,
+                Id = create.Id,
+                ElectricBill = create.ElectricBill,
+                MonthRent = create.MonthRent,
+                ParkingFee = create.ParkingFee,
+                RoomBil = create.RoomBil,
+                WaterBill = create.WaterBill,
+                WifiBill = create.WifiBill,
             };
             _context.InforBills.Add(bill);
             return await _context.SaveChangesAsync();
         }
 
+
+        //Input is a guid so u need find and change true value.
         public async Task<int> Delete(BillPaymentDelete delete)
         {
-            throw new NotImplementedException();
+            var list = _context.InforBills.Find(delete);
+            if (list != null)
+                _context.InforBills.Remove(list);
+            return await _context.SaveChangesAsync();
         }
 
-        public Task<List<BillPaymentViewModel>> GetAll()
+        // this func replace all value in update and some value is null, maybe it's will change -> null
+        // so i need fix the problem soon.!!!!!
+        public async Task<int> Update(BillPaymentUpdate update)
+        {
+            var value = _context.InforBills.Find(update.Id);
+            if (value != null)
+            {
+                value.ElectricBill = update.ElectricBill;
+                value.MonthRent = update.MonthRent;
+                value.ParkingFee = update.ParkingFee;
+                value.RoomBil = update.RoomBil;
+                value.WaterBill = update.WaterBill;
+                value.WifiBill = update.WifiBill;
+            }
+            return await _context.SaveChangesAsync();
+        }
+
+        // to api dont have oop so i cant write api=> await :)))
+        public async Task<List<BillPaymentViewModel>> GetAll()
         {
             throw new NotImplementedException();
         }
@@ -42,9 +73,6 @@ namespace Motel.Application.Category.BillPayment
             throw new NotImplementedException();
         }
 
-        public Task<int> Update(BillPaymentUpdate update)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
