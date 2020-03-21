@@ -2,7 +2,6 @@
 using Motel.EntityDb.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Motel.EntityDb.Extensions
 {
@@ -20,7 +19,7 @@ namespace Motel.EntityDb.Extensions
                 Identification = "183218131",
                 IDuser = Guid.NewGuid(),
                 PhoneNumber = "0963902609",
-                
+
             };
             builder.Entity<Customer>().HasData(customer);
 
@@ -53,7 +52,7 @@ namespace Motel.EntityDb.Extensions
                 WaterBill = 1,
                 WifiBill = 1,
             };
-            //builder.Entity<InforBill>().HasData(infor);
+            builder.Entity<InforBill>().HasData(infor);
         }
     }
 }

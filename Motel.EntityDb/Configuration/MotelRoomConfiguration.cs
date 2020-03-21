@@ -12,7 +12,7 @@ namespace Motel.EntityDb.Configuration
             builder.Property(m => m.Area).IsRequired();
             builder.Property(m => m.Status).IsRequired();
             builder.Property(m => m.Payment).IsRequired();
-            builder.HasMany(m => m.InforBills).WithOne(i => i.MotelRoom).IsRequired();
+            builder.HasMany(m => m.InforBills).WithOne(i => i.MotelRoom);
         }
     }
 }

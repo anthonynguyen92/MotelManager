@@ -243,6 +243,19 @@ namespace Motel.EntityDb.Migrations
                     b.HasKey("IDuser");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            IDuser = new Guid("f1fad0e9-5a78-4987-b09a-6878d238f1a6"),
+                            Address = "Ho Chi Minh",
+                            Birthdate = new DateTime(1998, 12, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "Duongthuy111298@gmail.com",
+                            FirstName = "Thuy",
+                            Identification = "183218131",
+                            LastName = "Duong Thi Thu",
+                            PhoneNumber = "0963902609"
+                        });
                 });
 
             modelBuilder.Entity("Motel.EntityDb.Entities.InforBill", b =>
@@ -257,7 +270,7 @@ namespace Motel.EntityDb.Migrations
                     b.Property<int>("MonthRent")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("MotelRoomid")
+                    b.Property<Guid?>("MotelRoomid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("ParkingFee")
@@ -277,6 +290,18 @@ namespace Motel.EntityDb.Migrations
                     b.HasIndex("MotelRoomid");
 
                     b.ToTable("InforBills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6c73a2ae-8116-406d-8710-5e1edb4b7b8b"),
+                            ElectricBill = 1m,
+                            MonthRent = 1,
+                            ParkingFee = 1m,
+                            RoomBil = 1m,
+                            WaterBill = 1m,
+                            WifiBill = 1m
+                        });
                 });
 
             modelBuilder.Entity("Motel.EntityDb.Entities.MotelRoom", b =>
@@ -306,6 +331,18 @@ namespace Motel.EntityDb.Migrations
                     b.HasKey("id");
 
                     b.ToTable("MotelRooms");
+
+                    b.HasData(
+                        new
+                        {
+                            id = new Guid("3dd6f0d0-f930-49da-8d7e-6d7fca1f0647"),
+                            Area = 123,
+                            BedRoom = 1,
+                            NameRoom = "Anthony's Room",
+                            Payment = 12m,
+                            Status = true,
+                            Toilet = 1
+                        });
                 });
 
             modelBuilder.Entity("Motel.EntityDb.Entities.Rent", b =>
@@ -337,15 +374,20 @@ namespace Motel.EntityDb.Migrations
                         .HasFilter("[FKMotel] IS NOT NULL");
 
                     b.ToTable("Rents");
+
+                    b.HasData(
+                        new
+                        {
+                            IdRent = new Guid("125e3fa2-e3fa-417c-9417-be7949c21c3d"),
+                            Start = new DateTime(2020, 3, 21, 0, 0, 0, 0, DateTimeKind.Local)
+                        });
                 });
 
             modelBuilder.Entity("Motel.EntityDb.Entities.InforBill", b =>
                 {
                     b.HasOne("Motel.EntityDb.Entities.MotelRoom", "MotelRoom")
                         .WithMany("InforBills")
-                        .HasForeignKey("MotelRoomid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MotelRoomid");
                 });
 
             modelBuilder.Entity("Motel.EntityDb.Entities.Rent", b =>
