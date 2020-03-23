@@ -1435,6 +1435,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "Motel.Utilities/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.0",
+        "compile": {
+          "bin/placeholder/Motel.Utilities.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Motel.Utilities.dll": {}
+        }
       }
     }
   },
@@ -5381,6 +5391,11 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "Motel.Utilities/1.0.0": {
+      "type": "project",
+      "path": "../Motel.Utilities/Motel.Utilities.csproj",
+      "msbuildProject": "../Motel.Utilities/Motel.Utilities.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -5391,7 +5406,8 @@
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.2",
       "Microsoft.Extensions.Configuration >= 3.1.2",
       "Microsoft.Extensions.Configuration.FileExtensions >= 3.1.2",
-      "Microsoft.Extensions.Configuration.Json >= 3.1.2"
+      "Microsoft.Extensions.Configuration.Json >= 3.1.2",
+      "Motel.Utilities >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -5419,7 +5435,11 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Project\\MotelManager\\Motel.Utilities\\Motel.Utilities.csproj": {
+              "projectPath": "D:\\Project\\MotelManager\\Motel.Utilities\\Motel.Utilities.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

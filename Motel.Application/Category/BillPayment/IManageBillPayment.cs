@@ -1,5 +1,6 @@
 ﻿using Motel.Application.Category.BillPayment.Dtos;
 using Motel.Application.Dtos;
+using Motel.EntityDb.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,7 @@ namespace Motel.Application.Category.BillPayment
         Task<int> Update(BillPaymentUpdate update);
         Task<int> Delete(BillPaymentDelete delete);
         Task<List<BillPaymentViewModel>> GetAll();
-        Task<PagedViewModel<BillPaymentViewModel>> GetAllPaging(int pIndex, int pSize);
+        Task<PagedViewModel<BillPaymentViewModel>> GetAllPaging(GetBillPaymentRequest request);
+        List<int> GetMotelRoomList();
     }
 }

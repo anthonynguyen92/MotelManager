@@ -14,7 +14,8 @@
           "Microsoft.EntityFrameworkCore.Tools": "3.1.2",
           "Microsoft.Extensions.Configuration": "3.1.2",
           "Microsoft.Extensions.Configuration.FileExtensions": "3.1.2",
-          "Microsoft.Extensions.Configuration.Json": "3.1.2"
+          "Microsoft.Extensions.Configuration.Json": "3.1.2",
+          "Motel.Utilities": "1.0.0"
         },
         "runtime": {
           "Motel.EntityDb.dll": {}
@@ -1018,6 +1019,11 @@
           "System.Xml.ReaderWriter": "4.3.0",
           "System.Xml.XmlDocument": "4.3.0"
         }
+      },
+      "Motel.Utilities/1.0.0": {
+        "runtime": {
+          "Motel.Utilities.dll": {}
+        }
       }
     }
   },
@@ -1733,6 +1739,11 @@
       "sha512": "sha512-MYoTCP7EZ98RrANESW05J5ZwskKDoN0AuZ06ZflnowE50LTpbR5yRg3tHckTVm5j/m47stuGgCrCHWePyHS70Q==",
       "path": "system.xml.xmlserializer/4.3.0",
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    },
+    "Motel.Utilities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

@@ -9,3 +9,5 @@ D:\Project\MotelManager\Motel.Application\obj\Debug\netcoreapp3.0\Motel.Applicat
 D:\Project\MotelManager\Motel.Application\obj\Debug\netcoreapp3.0\Motel.Application.csproj.CopyComplete
 D:\Project\MotelManager\Motel.Application\obj\Debug\netcoreapp3.0\Motel.Application.dll
 D:\Project\MotelManager\Motel.Application\obj\Debug\netcoreapp3.0\Motel.Application.pdb
+D:\Project\MotelManager\Motel.Application\bin\Debug\netcoreapp3.0\Motel.Utilities.dll
+D:\Project\MotelManager\Motel.Application\bin\Debug\netcoreapp3.0\Motel.Utilities.pdb

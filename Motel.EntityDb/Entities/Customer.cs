@@ -10,7 +10,7 @@ namespace Motel.EntityDb.Entities
     public class Customer
     {
         [Key]
-        public Guid IDuser { get; set; }
+        public String IDuser { get; set; }
         [Required]
         public String FirstName { get; set; }
         [Required]

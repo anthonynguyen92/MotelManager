@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v3.0": {
       "Motel.Application/1.0.0": {
         "dependencies": {
-          "Motel.EntityDb": "1.0.0"
+          "Motel.EntityDb": "1.0.0",
+          "Motel.Utilities": "1.0.0"
         },
         "runtime": {
           "Motel.Application.dll": {}
@@ -1003,10 +1004,16 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.2",
           "Microsoft.Extensions.Configuration": "3.1.2",
           "Microsoft.Extensions.Configuration.FileExtensions": "3.1.2",
-          "Microsoft.Extensions.Configuration.Json": "3.1.2"
+          "Microsoft.Extensions.Configuration.Json": "3.1.2",
+          "Motel.Utilities": "1.0.0"
         },
         "runtime": {
           "Motel.EntityDb.dll": {}
+        }
+      },
+      "Motel.Utilities/1.0.0": {
+        "runtime": {
+          "Motel.Utilities.dll": {}
         }
       }
     }
@@ -1711,6 +1718,11 @@
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
     "Motel.EntityDb/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Motel.Utilities/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

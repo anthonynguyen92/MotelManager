@@ -8,6 +8,8 @@ namespace Motel.EntityDb.Configuration
     {
         public void Configure(EntityTypeBuilder<InforBill> builder)
         {
+            builder.HasKey(p => p.IdInforBill);
+            builder.HasOne(p => p.MotelRoom).WithMany(m => m.InforBills).HasForeignKey(m => m.IdMotel);
         }
     }
 }

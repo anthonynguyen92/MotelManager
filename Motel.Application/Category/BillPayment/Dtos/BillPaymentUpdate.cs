@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Motel.Application.Category.BillPayment.Dtos
 {
-    public class BillPaymentUpdate
+    public class BillPaymentUpdate :BillPaymentCreate
     {
+
     }
 }

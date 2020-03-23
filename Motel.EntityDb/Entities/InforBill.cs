@@ -6,14 +6,15 @@ namespace Motel.EntityDb.Entities
 {
     public class InforBill
     {
-        public Guid Id { get; set; }
+        public String IdInforBill { get; set; }
         public int MonthRent { get; set; }
         public decimal WaterBill { get; set; }
         public decimal ElectricBill { get; set; }
         public decimal WifiBill { get; set; }
         public decimal ParkingFee { get; set; }
-        public decimal RoomBil { get; set; }
+        public decimal RoomBill { get; set; }
         public virtual MotelRoom MotelRoom { get; set; }
+        public int IdMotel { get; set; }
 
     }
 }

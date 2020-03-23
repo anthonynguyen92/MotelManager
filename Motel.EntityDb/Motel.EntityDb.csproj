@@ -1,26 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Remove="Migrations\20200320083056_SeeDData.cs" />
-    <Compile Remove="Migrations\20200320083056_SeeDData.Designer.cs" />
-    <Compile Remove="Migrations\20200320084145_SeedData.cs" />
-    <Compile Remove="Migrations\20200320084145_SeedData.Designer.cs" />
-    <Compile Remove="Migrations\20200320084754_SeedData.cs" />
-    <Compile Remove="Migrations\20200320084754_SeedData.Designer.cs" />
-    <Compile Remove="Migrations\20200320091136_Initial.cs" />
-    <Compile Remove="Migrations\20200320091136_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200320093922_FirstMi.cs" />
-    <Compile Remove="Migrations\20200320093922_FirstMi.Designer.cs" />
-    <Compile Remove="Migrations\20200320095105_SeedData.cs" />
-    <Compile Remove="Migrations\20200320095105_SeedData.Designer.cs" />
-    <Compile Remove="Migrations\20200321055007_IdentityCore.cs" />
-    <Compile Remove="Migrations\20200321055007_IdentityCore.Designer.cs" />
-    <Compile Remove="Migrations\20200321055204_AspNetIdentity.cs" />
-    <Compile Remove="Migrations\20200321055204_AspNetIdentity.Designer.cs" />
+    <Compile Remove="Migrations\20200323034715_TestIndentity.cs" />
+    <Compile Remove="Migrations\20200323034715_TestIndentity.Designer.cs" />
+    <Compile Remove="Migrations\20200323065443_test1.cs" />
+    <Compile Remove="Migrations\20200323065443_test1.Designer.cs" />
+    <Compile Remove="Migrations\20200323070615_test1.cs" />
+    <Compile Remove="Migrations\20200323070615_test1.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +28,10 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Motel.Utilities\Motel.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

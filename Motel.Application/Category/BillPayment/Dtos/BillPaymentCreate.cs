@@ -6,7 +6,7 @@ namespace Motel.Application.Category.BillPayment.Dtos
 {
     public class BillPaymentCreate
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public int MonthRent { get; set; }
         public decimal WaterBill { get; set; }
         public decimal ElectricBill { get; set; }

@@ -1417,13 +1417,24 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.2",
           "Microsoft.Extensions.Configuration": "3.1.2",
           "Microsoft.Extensions.Configuration.FileExtensions": "3.1.2",
-          "Microsoft.Extensions.Configuration.Json": "3.1.2"
+          "Microsoft.Extensions.Configuration.Json": "3.1.2",
+          "Motel.Utilities": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Motel.EntityDb.dll": {}
         },
         "runtime": {
           "bin/placeholder/Motel.EntityDb.dll": {}
+        }
+      },
+      "Motel.Utilities/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.0",
+        "compile": {
+          "bin/placeholder/Motel.Utilities.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Motel.Utilities.dll": {}
         }
       }
     }
@@ -5335,11 +5346,17 @@
       "type": "project",
       "path": "../Motel.EntityDb/Motel.EntityDb.csproj",
       "msbuildProject": "../Motel.EntityDb/Motel.EntityDb.csproj"
+    },
+    "Motel.Utilities/1.0.0": {
+      "type": "project",
+      "path": "../Motel.Utilities/Motel.Utilities.csproj",
+      "msbuildProject": "../Motel.Utilities/Motel.Utilities.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.0": [
-      "Motel.EntityDb >= 1.0.0"
+      "Motel.EntityDb >= 1.0.0",
+      "Motel.Utilities >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -5370,6 +5387,9 @@
           "projectReferences": {
             "D:\\Project\\MotelManager\\Motel.EntityDb\\Motel.EntityDb.csproj": {
               "projectPath": "D:\\Project\\MotelManager\\Motel.EntityDb\\Motel.EntityDb.csproj"
+            },
+            "D:\\Project\\MotelManager\\Motel.Utilities\\Motel.Utilities.csproj": {
+              "projectPath": "D:\\Project\\MotelManager\\Motel.Utilities\\Motel.Utilities.csproj"
             }
           }
         }

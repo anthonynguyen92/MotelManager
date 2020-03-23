@@ -9,14 +9,12 @@ namespace Motel.EntityDb.Entities
     public class Rent
     {
         [Key]
-        public Guid IdRent { get; set; }
+        public String IdRent { get; set; }
         public DateTime Start { get; set; }
         public DateTime? End { get; set; }
-        //public Guid RefMotel { get; set; }
-        //public Guid RefCustomer { get; set; }
-        [ForeignKey("FKMotel")]
+        public int idMotel { get; set; }
         public virtual MotelRoom MotelRoom { get; set; }
-        [ForeignKey("FKCustomer")]
+        public string IDcustomer { get; set; }
         public virtual Customer Customer { get; set; }
     }
 }

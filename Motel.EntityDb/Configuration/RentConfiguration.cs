@@ -8,8 +8,7 @@ namespace Motel.EntityDb.Configuration
     {
         public void Configure(EntityTypeBuilder<Rent> builder)
         {
-            builder.HasOne(r => r.MotelRoom).WithOne(m => m.Rent);
-            builder.HasOne(r => r.Customer).WithOne(c => c.Rent);
+            builder.HasKey(p => p.IdRent);
         }
     }
 }

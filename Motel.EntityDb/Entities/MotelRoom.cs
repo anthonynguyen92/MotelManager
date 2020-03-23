@@ -7,7 +7,7 @@ namespace Motel.EntityDb.Entities
 {
     public class MotelRoom
     {
-        public Guid id { get; set; }
+        public int idMotel { get; set; }
         public String NameRoom { get; set; }
         [Required]
         public int BedRoom { get; set; }

@@ -18,7 +18,7 @@ namespace Motel.EntityDb.Extensions
                 FirstName = "Thuy",
                 LastName = "Duong Thi Thu",
                 Identification = "183218131",
-                IDuser = Guid.NewGuid(),
+                IDuser = "Test",
                 PhoneNumber = "0963902609",
                 
             };
@@ -28,7 +28,7 @@ namespace Motel.EntityDb.Extensions
             {
                 Area = 123,
                 BedRoom = 1,
-                id = Guid.NewGuid(),
+                idMotel = 12,
                 NameRoom = "Anthony's Room",
                 Payment = 12,
                 Status = true,
@@ -38,22 +38,25 @@ namespace Motel.EntityDb.Extensions
 
             var rent = new Rent
             {
-                IdRent = Guid.NewGuid(),
+                IdRent = "Test2",
                 Start = DateTime.Today,
             };
             builder.Entity<Rent>().HasData(rent);
 
-            var infor = new InforBill
+            var bill = new InforBill()
             {
                 ElectricBill = 1,
-                Id = Guid.NewGuid(),
+                IdInforBill = "test1",
+
+                IdMotel = 12,
+
                 MonthRent = 1,
                 ParkingFee = 1,
-                RoomBil = 1,
+                RoomBill = 1,
                 WaterBill = 1,
                 WifiBill = 1,
             };
-            builder.Entity<InforBill>().HasData(infor);
+            builder.Entity<InforBill>().HasData(bill);
         }
     }
 }

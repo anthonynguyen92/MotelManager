@@ -1,4 +1,6 @@
 # MotelManager
 
-Các vấn đề hiện tại đang tồn tại trong Project:
-- chưa có Database
+Hiện tại đã có Database
+Chưa có api
+Chưa có front end
+đang thiết kế backend
