@@ -4,8 +4,7 @@ using System.Text;
 
 namespace Motel.Application.Category.BillPayment.Dtos
 {
-    public class BillPaymentDelete
+    public class BillPaymentFind :BillPaymentCreate
     {
-        public string IDFind { get; set; }
     }
 }

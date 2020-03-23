@@ -13,5 +13,6 @@ namespace Motel.Application.Category.BillPayment.Dtos
         public decimal WifiBill { get; set; }
         public decimal ParkingFee { get; set; }
         public decimal RoomBil { get; set; }
+        public int IdMotel { get; set; }
     }
 }
