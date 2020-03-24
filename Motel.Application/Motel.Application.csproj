@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Category\Customer\" />
     <Folder Include="Category\RoomMotel\" />
     <Folder Include="Category\UserManager\" />
   </ItemGroup>
