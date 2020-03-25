@@ -21,6 +21,7 @@ namespace Motel.Application.Category.CustomerRent
         Task<int> UpdateIdentification(string id,string idfi);
         Task<int> UpdateEmail(string id,string email);
         Task<PagedViewModel<CustomerRequest>> GettAll();
+        Task<PagedViewModel<CustomerRequest>> GetByFirstName(String name);
 
         /*
          * need a func which return a list of customer by using pagination.

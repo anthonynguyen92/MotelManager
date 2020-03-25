@@ -63,7 +63,7 @@ namespace Motel.BackEndApi.Controllers
         public async Task<IActionResult> UpdateAddress(string id,string address)
         {
             var result = await _customer.UpdateAddress(id, address);
-            if (result == null)
+            if (result ==0)
                 return BadRequest();
             return Ok(result);
         }
@@ -111,6 +111,28 @@ namespace Motel.BackEndApi.Controllers
             if (result == 0)
                 return BadRequest();
             return Ok(result);
+        }
+
+         //Summarry
+         // 
+         // first if u wanna return a number of list -> return record.
+         // 
+         // second if u wanna return a list of customer -> return item.
+         //
+        [HttpGet("Get-All")]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _customer.GettAll();
+            return Ok(result.Items);
+        }
+
+        [HttpGet("Get-Name")]
+        public async Task<IActionResult> GetListByName(string name)
+        {
+            var request = await _customer.GetByFirstName(name);
+            if (request == null)
+                return NotFound();
+            return Ok(request);
         }
 
         /*

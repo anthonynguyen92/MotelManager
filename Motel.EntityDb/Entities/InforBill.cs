@@ -15,6 +15,6 @@ namespace Motel.EntityDb.Entities
         public decimal RoomBill { get; set; }
         public virtual MotelRoom MotelRoom { get; set; }
         public int IdMotel { get; set; }
-
+        public bool Payment { get; set; }
     }
 }

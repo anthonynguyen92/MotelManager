@@ -10,7 +10,7 @@ namespace Motel.Application.Category.BillPayment
 {
     public interface IManageBillPayment
     {
-        Task<int> Create(BillPaymentRequest create);
+        Task<int> Create(BillPaymentRequest create,int id);
         Task<int> Update(BillPaymentRequest update);
         Task<int> UpdateMonthRent(string id,int price);
         Task<int> UpdateWaterBill(string id, decimal price);
@@ -19,11 +19,13 @@ namespace Motel.Application.Category.BillPayment
         Task<int> UpdateParkingFee(string id, decimal price);
         Task<int> UpdateRoomBil(string id, decimal price);
         Task<int> UpdateIdMotel(string id, int idmotel);
-        Task<int> Delete(BillPaymentRequest delete);
+        Task<int> Delete(string id);
         Task<BillPaymentRequest> Find(string id);
         Task<PagedViewModel<BillPaymentRequest>> GetAllBillpayment();
         // need fix this func
-        Task<PagedViewModel<BillPaymentRequest>> GetAllPaging(BillPaymentRequest request);
+        Task<PagedViewModel<BillPaymentRequest>> GetAllPaging();
         List<int> GetMotelRoomList();
+        Task<PagedViewModel<BillPaymentRequest>> GetPayment();
+        Task<bool> UpdatPayment(string id,decimal totalmoney);
     }
 }

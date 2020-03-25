@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,17 +25,18 @@ namespace Motel.BackEndApi.Controllers
             _publicpayment = publicpayment;
         }
 
-        [HttpGet]
+        [HttpGet("Test")]
         public async Task<IActionResult> Get()
         {
+            Thread.Sleep(3000);
             return Ok();
         }
 
         // localhost:port/api​/BillPayment​/deletebill
         [HttpDelete("deletebill")]
-        public async Task<IActionResult> Get([FromBody]BillPaymentDelete delete)
+        public async Task<IActionResult> Get([FromBody]string id)
         {
-            var result = await _manage.Delete(delete);
+            var result = await _manage.Delete(id);
             if (result == 0)
                 return NotFound();
             return Ok();
@@ -42,9 +44,9 @@ namespace Motel.BackEndApi.Controllers
 
         // CREATE - dont have modelisvalid
         [HttpPost("create-billpayment")]
-        public async Task<IActionResult> Create([FromBody]BillPaymentCreate create)
+        public async Task<IActionResult> Create([FromBody]BillPaymentRequest create, int id)
         {
-           var result = await _manage.Create(create);
+            var result = await _manage.Create(create, id);
             if (result == 0)
                 return BadRequest();
             return Ok("create ok");
@@ -52,7 +54,7 @@ namespace Motel.BackEndApi.Controllers
 
         // PUT - update add bill 
         [HttpPut("update-allbillpayment")]
-        public async Task<IActionResult> Update(BillPaymentUpdate infor)
+        public async Task<IActionResult> Update(BillPaymentRequest infor)
         {
             var result = await _manage.Update(infor);
             if (result == 0)
@@ -72,9 +74,9 @@ namespace Motel.BackEndApi.Controllers
 
         // PUT - Update Month Rent
         [HttpPut("Update-MonthRent")]
-        public async Task<IActionResult> UpdateMoth([FromBody]string id,int month)
+        public async Task<IActionResult> UpdateMoth([FromBody]string id, int month)
         {
-            var result = await _manage.UpdateMontRent(id, month);
+            var result = await _manage.UpdateMonthRent(id, month);
             if (result == 0)
                 return BadRequest("dont exists");
             return Ok(result);
@@ -138,6 +140,36 @@ namespace Motel.BackEndApi.Controllers
             if (result == 0)
                 return BadRequest("dont exists");
             return Ok(result);
+        }
+
+        // GET - get list bill
+        [HttpGet("Get-List")]
+        public async Task<IActionResult> GetAllValue()
+        {
+            var result = await _manage.GetAllPaging();
+            return Ok(result);
+        }
+
+        //GET List person haven't pay bill
+        [HttpGet("Get-List-Pay")]
+        public async Task<IActionResult> GetListPay()
+        {
+            var result = await _manage.GetPayment();
+            if (result == null)
+                return Ok("Tui no thanh toan het roi`");
+            else
+                return Ok(result);
+        }
+
+        // PUT payment for person 
+        [HttpPut("Payment-Bill")]
+        public async Task<IActionResult> UpdatePayment(string id, decimal total)
+        {
+            var result = await _manage.UpdatPayment(id, total);
+            if (result)
+                return Ok(id);
+            return BadRequest();
+
         }
     }
 }

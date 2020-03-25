@@ -8,7 +8,7 @@ namespace Motel.Application.Category.BillPayment
 {
     public class PublicBillPayment : IPublicBillPayment
     {
-        public PagedViewModel<BillPaymentViewModel> GetAllByBillPayment(GetBillPaymentRequest request)
+        public PagedViewModel<BillPaymentRequest> GetAllByBillPayment(BillPaymentRequest request)
         {
             throw new NotImplementedException();
         }

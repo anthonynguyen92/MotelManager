@@ -260,6 +260,9 @@ namespace Motel.EntityDb.Migrations
                     b.Property<decimal>("ParkingFee")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<bool>("Payment")
+                        .HasColumnType("bit");
+
                     b.Property<decimal>("RoomBill")
                         .HasColumnType("decimal(18,2)");
 
