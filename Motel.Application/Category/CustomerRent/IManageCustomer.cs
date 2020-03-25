@@ -1,4 +1,6 @@
-﻿using Motel.Application.Category.CustomerRent.Dtos;
+﻿using Motel.Application.Category.BillPayment.Dtos;
+using Motel.Application.Category.CustomerRent.Dtos;
+using Motel.Application.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +20,7 @@ namespace Motel.Application.Category.CustomerRent
         Task<int> UpdatePhoneNumber(string id,string number);
         Task<int> UpdateIdentification(string id,string idfi);
         Task<int> UpdateEmail(string id,string email);
-        List<CustomerRequest> GettAll();
+        Task<PagedViewModel<CustomerRequest>> GettAll();
 
         /*
          * need a func which return a list of customer by using pagination.

@@ -16,6 +16,7 @@ namespace Motel.Application.Category.RoomMotel
         Task<int> UpdateArea(int id, int area);
         ViewModelRoom<Room> GetAll();
         ViewModelRoom<Room> GetEmptyRoom();
+        ViewModelRoom<Room> GetRoomByName(string name);
 
     }
 }

@@ -24,7 +24,7 @@ namespace Motel.Application.Category.BillPayment
          * id is a value of motel room and u must get id for it
          */
         // POST: create a bill payment
-        public async Task<int> Create(BillPaymentCreate create, int id)
+        public async Task<int> Create(BillPaymentRequest create, int id)
         {
             var bill = new InforBill()
             {
@@ -42,7 +42,7 @@ namespace Motel.Application.Category.BillPayment
         }
 
         // DELETE: delete a bill payment
-        public async Task<int> Delete(BillPaymentDelete delete)
+        public async Task<int> Delete(BillPaymentRequest delete)
         {
             var bill = _context.InforBills.Find(delete.IDFind);
             if (bill == null) throw new MotelExceptions($"Cant find bill {delete.IDFind} ");
@@ -51,7 +51,7 @@ namespace Motel.Application.Category.BillPayment
         }
 
         // GET Update - have more and more infor so u need add s.th func, example : update money ....
-        public async Task<int> Update(BillPaymentUpdate update)
+        public async Task<int> Update(BillPaymentRequest update)
         {
             // fix exception 
             var bill = _context.InforBills.Find(update.Id);
@@ -78,7 +78,7 @@ namespace Motel.Application.Category.BillPayment
         }
 
         // GET get all bill payment (not have lazy loading
-        public async Task<PagedViewModel<BillPaymentViewModel>> GetAllBillpayment()
+        public async Task<PagedViewModel<BillPaymentRequest>> GetAllBillpayment()
         {
             var kq = from v in _context.InforBills
                      orderby v.IdInforBill
@@ -105,48 +105,47 @@ namespace Motel.Application.Category.BillPayment
 
         }
 
-        //GET seach with kw - check!!!!
-        public async Task<PagedViewModel<BillPaymentViewModel>> GetAllPaging(GetBillPaymentRequest request)
+        //GET fix!!!!
+        public Task<PagedViewModel<BillPaymentRequest>> GetAllPaging(BillPaymentRequest request)
         {
-            //1. Select join
-            var query = from c in _context.InforBills
-                        join mr in _context.MotelRooms on c.IdMotel equals mr.idMotel
-                        select new { c, mr };
+            #region need fix all
+            ////1. Select join
+            //var query = from c in _context.InforBills
+            //            join mr in _context.MotelRooms on c.IdMotel equals mr.idMotel
+            //            select new { c, mr };
 
-            //2.Filter
-            if (!String.IsNullOrEmpty(request.kw))
-                query = query.Where(x => x.mr.NameRoom.Contains(request.kw));
-            if (request.Categoryid.Count() > 0)
-            {
-                //????
-            }
+            ////2.Filter
+            //if (!String.IsNullOrEmpty(request.kw))
+            //    query = query.Where(x => x.mr.NameRoom.Contains(request.kw));
 
-            //3.Paging
-            int totalRow = await query.CountAsync();
-            var data = await query.Skip((request.PIndex - 1) * request.PSize)
-                .Take(request.PSize)
-                .Select(x => new BillPaymentViewModel()
-                {
-                    Id = x.c.IdInforBill,
-                    ElectricBill = x.c.ElectricBill,
-                    MonthRent = x.c.MonthRent,
-                    ParkingFee = x.c.ParkingFee,
-                    RoomBil = x.c.RoomBill,
-                    WaterBill = x.c.WaterBill,
-                    WifiBill = x.c.WifiBill
-                }).ToListAsync();
+            ////3.Paging
+            //int totalRow = await query.CountAsync();
+            //var data = await query.Skip((request.PIndex - 1) * request.PSize)
+            //    .Take(request.PSize)
+            //    .Select(x => new BillPaymentRequest()
+            //    {
+            //        Id = x.c.IdInforBill,
+            //        ElectricBill = x.c.ElectricBill,
+            //        MonthRent = x.c.MonthRent,
+            //        ParkingFee = x.c.ParkingFee,
+            //        RoomBil = x.c.RoomBill,
+            //        WaterBill = x.c.WaterBill,
+            //        WifiBill = x.c.WifiBill
+            //    }).ToListAsync();
 
-            //4. select and projection 
-            var pageResult = new PagedViewModel<BillPaymentViewModel>()
-            {
-                TotalRecord = totalRow,
-                Items = data
-            };
-            return pageResult;
+            ////4. select and projection 
+            //var pageResult = new PagedViewModel<BillPaymentViewModel>()
+            //{
+            //    TotalRecord = totalRow,
+            //    Items = data
+            //};
+            //return pageResult;
+            #endregion
+            throw new NotImplementedException();
         }
 
         // POST Create a bill payment
-        public async Task<int> Create(BillPaymentCreate create)
+        public async Task<int> Create(BillPaymentRequest create)
         {
             var billcreate = new InforBill()
             {
@@ -174,12 +173,12 @@ namespace Motel.Application.Category.BillPayment
         }
 
         // GET Find an id bill - enter true id and it's will return if not => null
-        public async Task<BillPaymentFind> Find(string id)
+        public async Task<BillPaymentRequest> Find(string id)
         {
             var result = await _context.InforBills.FindAsync(id);
             if (result == null || string.IsNullOrEmpty(id))
                 return null;
-            BillPaymentFind value = new BillPaymentFind()
+            BillPaymentRequest value = new BillPaymentRequest()
             {
                 ElectricBill = result.ElectricBill,
                 Id = result.IdInforBill,
@@ -192,8 +191,8 @@ namespace Motel.Application.Category.BillPayment
             };
             return value;
         }
-
-        public async Task<int> UpdateMontRent(string id, int price)
+        //Update detail of Bill - Month
+        public async Task<int> UpdateMonthRent(string id, int price)
         {
             var result = _context.InforBills.Find(id);
             if (string.IsNullOrEmpty(id) || result == null)
@@ -206,7 +205,8 @@ namespace Motel.Application.Category.BillPayment
             return await _context.SaveChangesAsync();
 
         }
-
+        
+        //Update detail of Bill - Water
         public async Task<int> UpdateWaterBill(string id, decimal price)
         {
             var result = _context.InforBills.Find(id);
@@ -219,7 +219,8 @@ namespace Motel.Application.Category.BillPayment
             }
             return await _context.SaveChangesAsync();
         }
-
+       
+        //Update detail of Bill - Electric
         public async Task<int> UpdateElectricBill(string id, decimal price)
         {
             var result = _context.InforBills.Find(id);
@@ -232,7 +233,8 @@ namespace Motel.Application.Category.BillPayment
             }
             return await _context.SaveChangesAsync();
         }
-
+        
+        //Update detail of Bill - Wifi
         public async Task<int> UpdateWifiBill(string id, decimal price)
         {
             var result = _context.InforBills.Find(id);
@@ -245,7 +247,8 @@ namespace Motel.Application.Category.BillPayment
             }
             return await _context.SaveChangesAsync();
         }
-
+        
+        //Update detail of Bill - Parking Fee
         public async Task<int> UpdateParkingFee(string id, decimal price)
         {
             var result = _context.InforBills.Find(id);
@@ -258,7 +261,8 @@ namespace Motel.Application.Category.BillPayment
             }
             return await _context.SaveChangesAsync();
         }
-
+        
+        //Update detail of Bill - Room
         public async Task<int> UpdateRoomBil(string id, decimal price)
         {
             var result = _context.InforBills.Find(id);
@@ -271,7 +275,8 @@ namespace Motel.Application.Category.BillPayment
             }
             return await _context.SaveChangesAsync();
         }
-
+        
+        //Update detail of Bill - IDMotel
         public async Task<int> UpdateIdMotel(string id, int idmotel)
         {
             var result = _context.InforBills.Find(id);

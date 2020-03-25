@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using Motel.Application.Category.CustomerRent.Dtos;
+using Motel.Application.Dtos;
 using Motel.EntityDb.EF;
 using Motel.EntityDb.Entities;
 using Motel.Utilities.Exceptions;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Motel.Application.Category.CustomerRent
 {
     public class ManageCustomer : IManageCustomer
     {
         private readonly MotelDbContext _context;
-
         public ManageCustomer(MotelDbContext context)
         {
             _context = context;
         }
-        
+
         // valid email - customer - identification - phone number
         public async Task<int> Create(CustomerRequest customer)
         {
@@ -76,26 +75,28 @@ namespace Motel.Application.Category.CustomerRent
             }
         }
 
-        public List<CustomerRequest> GettAll()
+        public async Task<PagedViewModel<CustomerRequest>> GettAll()
         {
             var request = from c in _context.Customers
                           orderby c.IDuser
                           select c;
-            var num = request.Count();
-            var data = request.Select(x => new CustomerRequest()
+            PagedViewModel<CustomerRequest> list = new PagedViewModel<CustomerRequest>()
             {
-                Address = x.Address,
-                Birthdate = x.Birthdate,
-                Email = x.Email,
-                FirstName = x.FirstName,
-                Identification = x.Identification,
-                IDuser = x.IDuser,
-                LastName = x.LastName,
-                PhoneNumber = x.PhoneNumber,
-                Sex = x.Sex,
-            }).ToList();
-            // need fix s.thing on here
-            return data;
+                Items = request.Select(x => new CustomerRequest()
+                {
+                    Address = x.Address,
+                    Birthdate = x.Birthdate,
+                    Email = x.Email,
+                    FirstName = x.FirstName,
+                    Identification = x.Identification,
+                    IDuser = x.IDuser,
+                    LastName = x.LastName,
+                    PhoneNumber = x.PhoneNumber,
+                    Sex = x.Sex,
+                }).ToList(),
+                TotalRecord = await request.CountAsync(),
+            };
+            return list;
         }
 
         public async Task<int> Update(string id, CustomerRequest customer)

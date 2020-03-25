@@ -8,6 +8,6 @@ namespace Motel.Application.Category.BillPayment
 {
     public interface IPublicBillPayment
     {
-        PagedViewModel<BillPaymentViewModel> GetAllByBillPayment(GetBillPaymentRequest request);
+        PagedViewModel<BillPaymentRequest> GetAllByBillPayment(BillPaymentRequest request);
     }
 }
