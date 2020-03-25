@@ -17,6 +17,6 @@
 
 <p> ví dụ mình vừa tạo 1 file Index.cshtml thì code của mình sẽ:</p>
 <pre><code>[HttpGet("index")]
-	public IActionResult Index()=>View();
+public IActionResult Index()=>View();
 </code></pre>
 
