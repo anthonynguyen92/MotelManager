@@ -18,7 +18,11 @@ namespace Motel.Application.Category.CustomerRent
         Task<int> UpdatePhoneNumber(string id,string number);
         Task<int> UpdateIdentification(string id,string idfi);
         Task<int> UpdateEmail(string id,string email);
-        Task<List<CustomerRequest>> GettAll();
+        List<CustomerRequest> GettAll();
+
+        /*
+         * need a func which return a list of customer by using pagination.
+         */
 
     }
 }

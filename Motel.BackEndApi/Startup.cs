@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Motel.Application.Category.BillPayment;
+using Motel.Application.Category.CustomerRent;
+using Motel.Application.Category.RoomMotel;
 using Motel.EntityDb.EF;
 using Motel.Utilities.Contains;
 
@@ -39,9 +41,11 @@ namespace Motel.BackEndApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Motel", Version = "v1" });
             });
 
+            // delcare DI
             services.AddTransient<IPublicBillPayment, PublicBillPayment>();
             services.AddTransient<IManageBillPayment, ManageBillPayment>();
-
+            services.AddTransient<IManageCustomer, ManageCustomer>();
+            services.AddTransient<IManageRoomMotel, ManageRoomMotel>();
 
         }
 

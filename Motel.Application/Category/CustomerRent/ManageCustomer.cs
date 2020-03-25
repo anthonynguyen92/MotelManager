@@ -17,12 +17,13 @@ namespace Motel.Application.Category.CustomerRent
         {
             _context = context;
         }
-
+        
+        // valid email - customer - identification - phone number
         public async Task<int> Create(CustomerRequest customer)
         {
             var resultid = _context.Customers.Find(customer.IDuser);
             //var resultiden = _context.Customers.Find(customer.Identification);
-            if (resultid == null)// || resultiden == null)
+            if (resultid != null)// || resultiden == null)
                 throw new MotelExceptions($"{customer.Identification} or ${customer.IDuser} exist please enter another id");
             else
             {
@@ -38,12 +39,12 @@ namespace Motel.Application.Category.CustomerRent
                     PhoneNumber = customer.PhoneNumber,
                     Sex = customer.Sex,
                 };
-
                 _context.Customers.Add(kq);
             }
             return await _context.SaveChangesAsync();
         }
 
+        // need return name delete 
         public async Task<int> Delete(string id)
         {
             var result = _context.Customers.Find(id);
@@ -116,9 +117,17 @@ namespace Motel.Application.Category.CustomerRent
             return await _context.SaveChangesAsync();
         }
 
-        public Task<int> UpdateAddress(string id, string address)
+        public async Task<int> UpdateAddress(string id, string address)
         {
-            throw new NotImplementedException();
+            var result = _context.Customers.Find(id);
+            if (string.IsNullOrEmpty(id) || result == null)
+                throw new MotelExceptions("just an id but you still enter wrong? need review yourself!");
+            else
+            {
+                result.Address = address;
+                _context.Customers.Update(result);
+            }
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<int> UpdateEmail(string id, string email)
@@ -134,9 +143,17 @@ namespace Motel.Application.Category.CustomerRent
             return await _context.SaveChangesAsync();
         }
 
-        public Task<int> UpdateIdentification(string id, string idfi)
+        public async Task<int> UpdateIdentification(string id, string idfi)
         {
-            throw new NotImplementedException();
+            var result = _context.Customers.Find(id);
+            if (string.IsNullOrEmpty(id) || result == null)
+                throw new MotelExceptions("just an id but you still enter wrong? need review yourself!");
+            else
+            {
+                result.Identification = idfi;
+                _context.Customers.Update(result);
+            }
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<int> UpdateName(string id, string fname, string lname)

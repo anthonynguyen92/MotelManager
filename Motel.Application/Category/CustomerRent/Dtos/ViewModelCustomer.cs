@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Motel.Application.Category.CustomerRent.Dtos
 {
-    public class ViewModelCustomer
+    public class ViewModelCustomer<T>
     {
-
+        public List<T> item;
+        public int totalRecord;
     }
 }
