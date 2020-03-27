@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Category\FamilyGroup\" />
     <Folder Include="Category\UserManager\" />
   </ItemGroup>
 

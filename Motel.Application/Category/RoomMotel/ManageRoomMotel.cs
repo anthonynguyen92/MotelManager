@@ -23,22 +23,17 @@ namespace Motel.Application.Category.RoomMotel
         // Create Room 
         public async Task<int> Create(RoomRequest request)
         {
-            var check = _context.MotelRooms.Find(request.idMotel);
-            if (check == null) throw new MotelExceptions("?");
-            else
-            {
                 var result = new MotelRoom()
                 {
+                    
                     Area = request.Area,
                     BedRoom = request.BedRoom,
-                    idMotel = request.idMotel,
                     NameRoom = request.NameRoom,
                     Payment = request.Payment,
                     Status = false,
                     Toilet = request.Toilet
                 };
                 _context.MotelRooms.Add(result);
-            }
             return await _context.SaveChangesAsync();
         }
 
@@ -212,7 +207,7 @@ namespace Motel.Application.Category.RoomMotel
         RoomRequest IManageRoomMotel.Find(int id)
         {
             var result = _context.MotelRooms.Find(id);
-            if (result == null) throw new MotelExceptions($"? {id}");
+            if (result == null) throw new MotelExceptions($"? Chang mày giảm cân đi chứ mập lắm rồi");
             else
             {
                 RoomRequest data = new RoomRequest()
@@ -227,7 +222,6 @@ namespace Motel.Application.Category.RoomMotel
                 };
                 return data;
             }
-            return null;
         }
     }
 }

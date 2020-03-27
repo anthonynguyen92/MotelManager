@@ -36,7 +36,7 @@ namespace Motel.Application.Category.RoomMotel
         Task<ViewModelRoom<Room>> GetAll();
         
         // Get - All Empty rooms
-        Task<ViewModelRoom<Room>> GetEmptyRoomAsync();
+        Task<ViewModelRoom<Room>> GetEmptyRoomAsync();  
         
         // Get - All room with Name Room
         Task<ViewModelRoom<Room>> GetRoomByName(string name);
