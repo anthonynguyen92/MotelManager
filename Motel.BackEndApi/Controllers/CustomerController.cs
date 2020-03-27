@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Motel.Application.Category.CustomerRent;
 using Motel.Application.Category.CustomerRent.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Motel.BackEndApi.Controllers
@@ -30,7 +27,7 @@ namespace Motel.BackEndApi.Controllers
                 return BadRequest();
             return Ok(request);
         }
-        
+
         [HttpDelete("Delete-Customer")]
         public async Task<IActionResult> Delete(string id)
         {
@@ -43,7 +40,7 @@ namespace Motel.BackEndApi.Controllers
         [HttpPut("Update-Customer")]
         public async Task<IActionResult> UpdateCustomer(CustomerRequest request)
         {
-            var result = await _customer.Update(request.IDuser,request);
+            var result = await _customer.Update(request.IDuser, request);
             if (result == 0)
                 return BadRequest();
             return Ok(result);
@@ -53,17 +50,17 @@ namespace Motel.BackEndApi.Controllers
         [HttpGet("Get-Customer")]
         public IActionResult GetCustomer(string id)
         {
-            var result =  _customer.Find(id);
+            var result = _customer.Find(id);
             if (result == null)
                 return BadRequest();
             return Ok(result);
         }
 
         [HttpPut("Update-address")]
-        public async Task<IActionResult> UpdateAddress(string id,string address)
+        public async Task<IActionResult> UpdateAddress(string id, string address)
         {
             var result = await _customer.UpdateAddress(id, address);
-            if (result ==0)
+            if (result == 0)
                 return BadRequest();
             return Ok(result);
         }
@@ -87,9 +84,9 @@ namespace Motel.BackEndApi.Controllers
         }
 
         [HttpPut("Update-Name")]
-        public async Task<IActionResult> UpdateName(string id, string fname,string lname)
+        public async Task<IActionResult> UpdateName(string id, string fname, string lname)
         {
-            var result =  await _customer.UpdateName(id, fname,lname);
+            var result = await _customer.UpdateName(id, fname, lname);
             if (result == 0)
                 return BadRequest();
             return Ok(result);
@@ -113,12 +110,12 @@ namespace Motel.BackEndApi.Controllers
             return Ok(result);
         }
 
-         //Summarry
-         // 
-         // first if u wanna return a number of list -> return record.
-         // 
-         // second if u wanna return a list of customer -> return item.
-         //
+        //Summarry
+        // 
+        // first if u wanna return a number of list -> return record.
+        // 
+        // second if u wanna return a list of customer -> return item.
+        //
         [HttpGet("Get-All")]
         public async Task<IActionResult> GetAll()
         {

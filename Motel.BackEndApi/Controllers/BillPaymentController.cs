@@ -181,5 +181,15 @@ namespace Motel.BackEndApi.Controllers
                 return Ok("good");
             return Ok(reslut);
         }
+        
+        // GET bill infor
+        [HttpGet("Bill-Infor")]
+        public IActionResult GetBill(string id)
+        {
+            var result = _publicpayment.GetBill(id);
+            if(string.IsNullOrEmpty(id)||result == null)
+                return BadRequest();
+            return Ok(result);
+        }
     }
 }

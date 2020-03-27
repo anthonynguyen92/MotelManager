@@ -1,8 +1,0 @@
-D:\Project\MotelManager\Motel.Utilities\bin\Debug\netcoreapp3.0\Motel.Utilities.deps.json
-D:\Project\MotelManager\Motel.Utilities\bin\Debug\netcoreapp3.0\Motel.Utilities.dll
-D:\Project\MotelManager\Motel.Utilities\bin\Debug\netcoreapp3.0\Motel.Utilities.pdb
-D:\Project\MotelManager\Motel.Utilities\obj\Debug\netcoreapp3.0\Motel.Utilities.csprojAssemblyReference.cache
-D:\Project\MotelManager\Motel.Utilities\obj\Debug\netcoreapp3.0\Motel.Utilities.AssemblyInfoInputs.cache
-D:\Project\MotelManager\Motel.Utilities\obj\Debug\netcoreapp3.0\Motel.Utilities.AssemblyInfo.cs
-D:\Project\MotelManager\Motel.Utilities\obj\Debug\netcoreapp3.0\Motel.Utilities.dll
-D:\Project\MotelManager\Motel.Utilities\obj\Debug\netcoreapp3.0\Motel.Utilities.pdb
