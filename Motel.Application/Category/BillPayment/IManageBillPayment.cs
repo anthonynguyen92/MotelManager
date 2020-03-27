@@ -27,5 +27,6 @@ namespace Motel.Application.Category.BillPayment
         List<int> GetMotelRoomList();
         Task<PagedViewModel<BillPaymentRequest>> GetPayment();
         Task<bool> UpdatPayment(string id,decimal totalmoney);
+        Task<PagedViewModel<BillPaymentRequest>> GetPaymentDone();
     }
 }

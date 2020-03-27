@@ -39,6 +39,7 @@ namespace Motel.Application.Category.BillPayment
                     WifiBill = create.WifiBill,
                     IdMotel = id,
                     Payment = false,
+                    DateCreate = DateTime.Now,
                 };
                 _context.InforBills.Add(bill);
             }
@@ -307,6 +308,7 @@ namespace Motel.Application.Category.BillPayment
                 if (value == totalmoney)
                 {
                     result.Payment = true;
+                    result.DatePay = DateTime.Now;
                     _context.InforBills.Update(result);
                     await _context.SaveChangesAsync();
                 }
@@ -319,6 +321,31 @@ namespace Motel.Application.Category.BillPayment
         public Task<PagedViewModel<BillPaymentRequest>> GetAllBillpayment()
         {
             throw new NotImplementedException();
+        }
+        
+        // Get infobil payment
+        public async Task<PagedViewModel<BillPaymentRequest>> GetPaymentDone()
+        {
+            var result = from c in _context.InforBills
+                         where c.Payment == true
+                         select c;
+            var data = new PagedViewModel<BillPaymentRequest>()
+            {
+                Items = result.Select(x => new BillPaymentRequest()
+                {
+                    ElectricBill = x.ElectricBill,
+                    Id = x.IdInforBill,
+                    IdMotel = x.IdMotel,
+                    MonthRent = x.MonthRent,
+                    ParkingFee = x.ParkingFee,
+                    RoomBil = x.RoomBill,
+                    WaterBill = x.WaterBill,
+                    WifiBill = x.WifiBill,
+                    Payment = x.Payment
+                }).ToList(),
+                TotalRecord = await result.CountAsync(),
+            };
+            return data;
         }
     }
 }

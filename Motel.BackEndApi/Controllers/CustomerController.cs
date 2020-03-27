@@ -139,6 +139,5 @@ namespace Motel.BackEndApi.Controllers
          * update - modelivalid - 
          * update get value by pagination
          */
-
     }
 }

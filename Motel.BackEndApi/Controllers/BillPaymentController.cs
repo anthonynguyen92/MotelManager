@@ -34,7 +34,7 @@ namespace Motel.BackEndApi.Controllers
 
         // localhost:port/api​/BillPayment​/deletebill
         [HttpDelete("deletebill")]
-        public async Task<IActionResult> Get([FromBody]string id)
+        public async Task<IActionResult> Delete([FromBody]string id)
         {
             var result = await _manage.Delete(id);
             if (result == 0)
@@ -170,6 +170,16 @@ namespace Motel.BackEndApi.Controllers
                 return Ok(id);
             return BadRequest();
 
+        }
+    
+        // GET payment - done 
+        [HttpGet("Payment-done")]
+        public async Task<IActionResult> GetPaymentDone()
+        {
+            var reslut = await _manage.GetPaymentDone();
+            if (reslut == null)
+                return Ok("good");
+            return Ok(reslut);
         }
     }
 }
