@@ -5,18 +5,41 @@ namespace Motel.Application.Category.RoomMotel
 {
     public interface IManageRoomMotel
     {
+        // Create - new room
         Task<int> Create(RoomRequest request);
-        Task<int> Find(int id);
+        
+        // Find - a room with id
+        RoomRequest Find(int id);
+
+        // Update - all infor room
         Task<int> Update(RoomRequest request);
+        
+        // Delete - a room with id
         Task<int> Delete(int id);
+        
+        // Update - Name room with id
         Task<int> UpdateName(int id, string name);
+        
+        // Update - payment with id
         Task<int> UpdatePayment(int id, decimal price);
+        
+        // Update status room - true -> false or false -> true
         Task<int> UpdateStatus(int id);
+        
+        // Update - infor room : bedroom - toilet ...
         Task<int> UpdateInfor(int id, int bedroom, int toilet);
+        
+        // Update - Area with id
         Task<int> UpdateArea(int id, int area);
-        ViewModelRoom<Room> GetAll();
-        ViewModelRoom<Room> GetEmptyRoom();
-        ViewModelRoom<Room> GetRoomByName(string name);
+        
+        // Get - All rooms
+        Task<ViewModelRoom<Room>> GetAll();
+        
+        // Get - All Empty rooms
+        Task<ViewModelRoom<Room>> GetEmptyRoomAsync();
+        
+        // Get - All room with Name Room
+        Task<ViewModelRoom<Room>> GetRoomByName(string name);
 
     }
 }

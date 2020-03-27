@@ -83,8 +83,6 @@ namespace Motel.Application.Category.BillPayment
             return await _context.SaveChangesAsync();
         }
 
-        // GET get all bill payment (not have lazy loading
-
         //GET All Paging
         public async Task<PagedViewModel<BillPaymentRequest>> GetAllPaging()
         {
@@ -137,7 +135,8 @@ namespace Motel.Application.Category.BillPayment
                     RoomBil = x.RoomBill,
                     WaterBill = x.WaterBill,
                     WifiBill = x.WifiBill,
-                    Payment = x.Payment
+                    Payment = x.Payment,
+                    DateCreate = x.DateCreate
                 }).ToList(),
                 TotalRecord = await request.CountAsync(),
             };
@@ -288,7 +287,8 @@ namespace Motel.Application.Category.BillPayment
                     RoomBil = x.RoomBill,
                     WaterBill = x.WaterBill,
                     WifiBill = x.WifiBill,
-                    Payment = x.Payment
+                    Payment = x.Payment,
+                    DateCreate = x.DateCreate,
                 }).ToList(),
                 TotalRecord = await result.CountAsync(),
             };
@@ -317,17 +317,12 @@ namespace Motel.Application.Category.BillPayment
             }
             return true;
         }
-
-        public Task<PagedViewModel<BillPaymentRequest>> GetAllBillpayment()
-        {
-            throw new NotImplementedException();
-        }
         
         // Get infobil payment
         public async Task<PagedViewModel<BillPaymentRequest>> GetPaymentDone()
         {
             var result = from c in _context.InforBills
-                         where c.Payment == true
+                         where c.Payment == true && c.DatePay != null
                          select c;
             var data = new PagedViewModel<BillPaymentRequest>()
             {
@@ -341,7 +336,8 @@ namespace Motel.Application.Category.BillPayment
                     RoomBil = x.RoomBill,
                     WaterBill = x.WaterBill,
                     WifiBill = x.WifiBill,
-                    Payment = x.Payment
+                    Payment = x.Payment,
+                    DateCreate = x.DateCreate,
                 }).ToList(),
                 TotalRecord = await result.CountAsync(),
             };

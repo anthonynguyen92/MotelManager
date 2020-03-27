@@ -21,12 +21,12 @@ namespace Motel.Application.Category.BillPayment
         Task<int> UpdateIdMotel(string id, int idmotel);
         Task<int> Delete(string id);
         Task<BillPaymentRequest> Find(string id);
-        Task<PagedViewModel<BillPaymentRequest>> GetAllBillpayment();
-        // need fix this func
         Task<PagedViewModel<BillPaymentRequest>> GetAllPaging();
         List<int> GetMotelRoomList();
         Task<PagedViewModel<BillPaymentRequest>> GetPayment();
         Task<bool> UpdatPayment(string id,decimal totalmoney);
         Task<PagedViewModel<BillPaymentRequest>> GetPaymentDone();
+    
+        // update + Add + fix some thing but i dont know :))) 
     }
 }

@@ -15,5 +15,8 @@ namespace Motel.Application.Category.BillPayment.Dtos
         public decimal RoomBil { get; set; }
         public int IdMotel { get; set; }
         public bool Payment { get; set; }
+        public DateTime DateCreate { get; set; }
+        public DateTime DatePay { get; set; }
+
     }
 }
