@@ -26,5 +26,7 @@ namespace Motel.EntityDb.Entities
         [Required]
         public String Email { get; set; }
         public virtual Rent Rent { get; set; }
+        public List<FamilyGroup> FamilyGroups { get; set; }
+
     }
 }

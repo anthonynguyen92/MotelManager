@@ -10,6 +10,8 @@ namespace Motel.EntityDb.Configuration
         {
             builder.HasKey(p => p.IdInforBill);
             builder.HasOne(p => p.MotelRoom).WithMany(m => m.InforBills).HasForeignKey(m => m.IdMotel);
+            builder.Property(p => p.DateCreate).IsRequired();
+
         }
     }
 }

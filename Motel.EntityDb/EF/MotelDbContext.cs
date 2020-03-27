@@ -18,6 +18,7 @@ namespace Motel.EntityDb.EF
         public DbSet<Rent> Rents { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<InforBill> InforBills { get; set; }
+        public DbSet<FamilyGroup> Families { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +26,7 @@ namespace Motel.EntityDb.EF
             modelBuilder.ApplyConfiguration(new RentConfiguration());
             modelBuilder.ApplyConfiguration(new CustomerConfiguration());
             modelBuilder.ApplyConfiguration(new InforBillConfiguration());
+            modelBuilder.ApplyConfiguration(new FamilyConfiguration());
 
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new AppRolesConfiguration());
