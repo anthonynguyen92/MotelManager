@@ -129,7 +129,7 @@ namespace Motel.BackEndApi.Controllers
             var request = await _customer.GetByFirstName(name);
             if (request == null)
                 return NotFound();
-            return Ok(request);
+            return Ok(request.Items);
         }
 
         /*
