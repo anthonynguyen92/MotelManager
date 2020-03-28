@@ -9,11 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motel.EntityDb", "..\Motel.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motel.Application", "..\Motel.Application\Motel.Application.csproj", "{5845AF44-7FB5-4806-B85A-06EA7A358419}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motel.BackEndApi", "..\Motel.BackEndApi\Motel.BackEndApi.csproj", "{5B3DC8D2-E602-48E4-A814-5AF10E1FDDDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motel.BackEndApi", "..\Motel.BackEndApi\Motel.BackEndApi.csproj", "{5B3DC8D2-E602-48E4-A814-5AF10E1FDDDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motel.WebApplication", "..\Motel.WebApplication\Motel.WebApplication.csproj", "{D155170A-4B7E-409E-B000-F9E9CD31147A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motel.WebApplication", "..\Motel.WebApplication\Motel.WebApplication.csproj", "{D155170A-4B7E-409E-B000-F9E9CD31147A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motel.Utilities", "..\Motel.Utilities\Motel.Utilities.csproj", "{BE294C9B-0046-4231-85FA-A4D5066B1FE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motel.Utilities", "..\Motel.Utilities\Motel.Utilities.csproj", "{BE294C9B-0046-4231-85FA-A4D5066B1FE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motel.ViewModel", "..\Motel.ViewModel\Motel.ViewModel.csproj", "{5FDB861C-1271-48BF-AF90-3FBCB5C08261}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{BE294C9B-0046-4231-85FA-A4D5066B1FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE294C9B-0046-4231-85FA-A4D5066B1FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE294C9B-0046-4231-85FA-A4D5066B1FE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FDB861C-1271-48BF-AF90-3FBCB5C08261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FDB861C-1271-48BF-AF90-3FBCB5C08261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FDB861C-1271-48BF-AF90-3FBCB5C08261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FDB861C-1271-48BF-AF90-3FBCB5C08261}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
