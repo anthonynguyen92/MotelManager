@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motel.WebApplication", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motel.Utilities", "..\Motel.Utilities\Motel.Utilities.csproj", "{BE294C9B-0046-4231-85FA-A4D5066B1FE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motel.ViewModel", "..\Motel.ViewModel\Motel.ViewModel.csproj", "{5FDB861C-1271-48BF-AF90-3FBCB5C08261}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motel.ViewModel", "..\Motel.ViewModel\Motel.ViewModel.csproj", "{5FDB861C-1271-48BF-AF90-3FBCB5C08261}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

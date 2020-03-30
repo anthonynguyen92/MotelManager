@@ -37,23 +37,28 @@ namespace Motel.Application.Category.User
             if (!result.Succeeded)
                 return null;
             var roles = await _userManager.GetRolesAsync(user);
-           
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var credis = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var tokendescriptor = new SecurityTokenDescriptor()
+            var claims = new[]
             {
-                Subject = new ClaimsIdentity(new Claim[]{
-                    new Claim(ClaimTypes.Email,user.Email),
-                    new Claim(ClaimTypes.GivenName,user.FirstName),
-                    new Claim(ClaimTypes.Role, string.Join(";",roles)),
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = credis,
+                new Claim(ClaimTypes.Email,user.Email),
+                new Claim(ClaimTypes.GivenName,user.FirstName),
+                new Claim(ClaimTypes.Role, string.Join(";",roles)),
+                new Claim(ClaimTypes.Name, request.UserName)
             };
+
             var tokenhandle = new JwtSecurityTokenHandler();
-            var token = tokenhandle.CreateToken(tokendescriptor);
-            return tokenhandle.WriteToken(token);
+
+            var token1 = new JwtSecurityToken(
+                _config["Tokens:Issuer"],
+                _config["Tokens:Issuer"],
+                claims,
+                expires: DateTime.Now.AddHours(3),
+                signingCredentials: credis
+                );
+            return tokenhandle.WriteToken(token1);
         }
         public async Task<bool> register(RegisterRequest requset)
         {

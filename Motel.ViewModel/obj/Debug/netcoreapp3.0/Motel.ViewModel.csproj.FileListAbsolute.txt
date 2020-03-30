@@ -1,8 +1,0 @@
-D:\Project\MotelManager\Motel.ViewModel\bin\Debug\netcoreapp3.0\Motel.ViewModel.deps.json
-D:\Project\MotelManager\Motel.ViewModel\bin\Debug\netcoreapp3.0\Motel.ViewModel.dll
-D:\Project\MotelManager\Motel.ViewModel\bin\Debug\netcoreapp3.0\Motel.ViewModel.pdb
-D:\Project\MotelManager\Motel.ViewModel\obj\Debug\netcoreapp3.0\Motel.ViewModel.csprojAssemblyReference.cache
-D:\Project\MotelManager\Motel.ViewModel\obj\Debug\netcoreapp3.0\Motel.ViewModel.AssemblyInfoInputs.cache
-D:\Project\MotelManager\Motel.ViewModel\obj\Debug\netcoreapp3.0\Motel.ViewModel.AssemblyInfo.cs
-D:\Project\MotelManager\Motel.ViewModel\obj\Debug\netcoreapp3.0\Motel.ViewModel.dll
-D:\Project\MotelManager\Motel.ViewModel\obj\Debug\netcoreapp3.0\Motel.ViewModel.pdb
