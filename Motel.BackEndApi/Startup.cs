@@ -1,16 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Microsoft.VisualBasic;
 using Motel.Application.Category.BillPayment;
 using Motel.Application.Category.CustomerRent;
 using Motel.Application.Category.RoomMotel;
@@ -18,11 +17,14 @@ using Motel.Application.Category.User;
 using Motel.EntityDb.EF;
 using Motel.EntityDb.Entities;
 using Motel.Utilities.Contains;
+using Motel.ViewModel.System.User;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Motel.BackEndApi
 {
     public class Startup
-    {   
+    {
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,8 +35,10 @@ namespace Motel.BackEndApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            
+            services.AddControllers()
+                .AddFluentValidation(fx => fx.RegisterValidatorsFromAssemblyContaining<LoginRequestValidation>())
+                .AddFluentValidation(fx=> fx.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidation>());
+
             services.AddDbContext<MotelDbContext>(option => option
                 .UseSqlServer(Configuration
                 .GetConnectionString(SystemContains.MainConnectionString)));
@@ -45,7 +49,58 @@ namespace Motel.BackEndApi
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Motel", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger", Version = "V1" });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                  {
+                    {
+                      new OpenApiSecurityScheme
+                      {
+                        Reference = new OpenApiReference
+                          {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                          },
+                          Scheme = "oauth2",
+                          Name = "Bearer",
+                          In = ParameterLocation.Header,
+                        },
+                        new List<string>()
+                      }
+                    });
+            });
+
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = Configuration.GetValue<string>("Tokens:Issuer"),
+                    ValidateAudience = true,
+                    ValidAudience = Configuration.GetValue<string>("Tokens:Issuer"),
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = System.TimeSpan.Zero,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                };
             });
 
             // delcare DI
@@ -53,11 +108,13 @@ namespace Motel.BackEndApi
             services.AddTransient<IManageBillPayment, ManageBillPayment>();
             services.AddTransient<IManageCustomer, ManageCustomer>();
             services.AddTransient<IManageRoomMotel, ManageRoomMotel>();
-           
+
             // Declare Login
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<RoleManager<AppRoles>, RoleManager<AppRoles>>();
+            services.AddTransient<IValidatorInterceptor, MyDefaultInterceptor>();
+            //services.AddMvcCore().AddFluentValidation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,14 +134,13 @@ namespace Motel.BackEndApi
             app.UseStaticFiles();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c=>
+            app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            app.UseRouting();
             app.UseAuthentication();
-
+            app.UseRouting();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

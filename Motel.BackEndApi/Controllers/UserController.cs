@@ -20,7 +20,7 @@ namespace Motel.BackEndApi.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginRequest request)
+        public async Task<IActionResult> Login([FromBody]LoginRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -29,7 +29,7 @@ namespace Motel.BackEndApi.Controllers
             {
                 return BadRequest("????");
             }
-            return Ok(new { token = result });
+            return Ok(result);
         }
 
         [HttpPost("Register")]
