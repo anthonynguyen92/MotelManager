@@ -1,0 +1,15 @@
+D:\Project\MotelManager\Motel.EntityDb\bin\Debug\netcoreapp3.0\Motel.EntityDb.deps.json
+D:\Project\MotelManager\Motel.EntityDb\bin\Debug\netcoreapp3.0\Motel.EntityDb.runtimeconfig.json
+D:\Project\MotelManager\Motel.EntityDb\bin\Debug\netcoreapp3.0\Motel.EntityDb.runtimeconfig.dev.json
+D:\Project\MotelManager\Motel.EntityDb\bin\Debug\netcoreapp3.0\Motel.EntityDb.dll
+D:\Project\MotelManager\Motel.EntityDb\bin\Debug\netcoreapp3.0\Motel.EntityDb.pdb
+D:\Project\MotelManager\Motel.EntityDb\bin\Debug\netcoreapp3.0\Motel.Utilities.dll
+D:\Project\MotelManager\Motel.EntityDb\bin\Debug\netcoreapp3.0\Motel.Utilities.pdb
+D:\Project\MotelManager\Motel.EntityDb\obj\Debug\netcoreapp3.0\Motel.EntityDb.csprojAssemblyReference.cache
+D:\Project\MotelManager\Motel.EntityDb\obj\Debug\netcoreapp3.0\Motel.EntityDb.Properties.Resources.resources
+D:\Project\MotelManager\Motel.EntityDb\obj\Debug\netcoreapp3.0\Motel.EntityDb.csproj.GenerateResource.cache
+D:\Project\MotelManager\Motel.EntityDb\obj\Debug\netcoreapp3.0\Motel.EntityDb.AssemblyInfoInputs.cache
+D:\Project\MotelManager\Motel.EntityDb\obj\Debug\netcoreapp3.0\Motel.EntityDb.AssemblyInfo.cs
+D:\Project\MotelManager\Motel.EntityDb\obj\Debug\netcoreapp3.0\Motel.EntityDb.csproj.CopyComplete
+D:\Project\MotelManager\Motel.EntityDb\obj\Debug\netcoreapp3.0\Motel.EntityDb.dll
+D:\Project\MotelManager\Motel.EntityDb\obj\Debug\netcoreapp3.0\Motel.EntityDb.pdb

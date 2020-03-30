@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Motel.Application.Category.CustomerRent;
 using Motel.Application.Category.CustomerRent.Dtos;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ namespace Motel.BackEndApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
         private readonly IManageCustomer _customer;

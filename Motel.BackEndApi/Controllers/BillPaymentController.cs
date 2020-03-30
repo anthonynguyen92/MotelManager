@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Motel.Application.Category.BillPayment;
@@ -14,6 +15,7 @@ namespace Motel.BackEndApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BillPaymentController : ControllerBase
     {
         private readonly IManageBillPayment _manage;

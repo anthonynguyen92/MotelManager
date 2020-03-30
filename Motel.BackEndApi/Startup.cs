@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,9 @@ using Microsoft.OpenApi.Models;
 using Motel.Application.Category.BillPayment;
 using Motel.Application.Category.CustomerRent;
 using Motel.Application.Category.RoomMotel;
+using Motel.Application.Category.User;
 using Motel.EntityDb.EF;
+using Motel.EntityDb.Entities;
 using Motel.Utilities.Contains;
 
 namespace Motel.BackEndApi
@@ -36,6 +39,10 @@ namespace Motel.BackEndApi
                 .UseSqlServer(Configuration
                 .GetConnectionString(SystemContains.MainConnectionString)));
 
+            services.AddIdentity<AppUser, AppRoles>()
+                .AddEntityFrameworkStores<MotelDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Motel", Version = "v1" });
@@ -46,7 +53,11 @@ namespace Motel.BackEndApi
             services.AddTransient<IManageBillPayment, ManageBillPayment>();
             services.AddTransient<IManageCustomer, ManageCustomer>();
             services.AddTransient<IManageRoomMotel, ManageRoomMotel>();
-
+           
+            // Declare Login
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
+            services.AddTransient<RoleManager<AppRoles>, RoleManager<AppRoles>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +83,7 @@ namespace Motel.BackEndApi
             });
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
