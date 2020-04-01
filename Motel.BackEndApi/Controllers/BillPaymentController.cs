@@ -46,7 +46,7 @@ namespace Motel.BackEndApi.Controllers
 
         // CREATE - dont have modelisvalid
         [HttpPost("create-billpayment")]
-        public async Task<IActionResult> Create([FromBody]BillPaymentRequest create, int id)
+        public async Task<IActionResult> Create([FromBody]BillRequest create, int id)
         {
             var result = await _manage.Create(create, id);
             if (result == 0)
@@ -56,7 +56,7 @@ namespace Motel.BackEndApi.Controllers
 
         // PUT - update add bill 
         [HttpPut("update-allbillpayment")]
-        public async Task<IActionResult> Update(BillPaymentRequest infor)
+        public async Task<IActionResult> Update(BillRequest infor)
         {
             var result = await _manage.Update(infor);
             if (result == 0)
@@ -184,14 +184,12 @@ namespace Motel.BackEndApi.Controllers
             return Ok(reslut);
         }
         
-        // GET bill infor
-        [HttpGet("Bill-Infor")]
-        public IActionResult GetBill(string id)
+        // GET by id motel
+        [HttpGet("Get-Motel")]
+        public async Task<IActionResult> GetById(int value)
         {
-            var result = _publicpayment.GetBill(id);
-            if(string.IsNullOrEmpty(id)||result == null)
-                return BadRequest();
-            return Ok(result);
+            var result = await _manage.GetByIDMotel(value);
+            return Ok(result.Items);
         }
     }
 }

@@ -134,6 +134,8 @@ namespace Motel.BackEndApi.Controllers
             return Ok(request.Items);
         }
 
+        [HttpGet("Get-id")]
+        public IActionResult getID(CustomerRequest request) => Ok(request.IDuser);
         /*
          * update - modelivalid - 
          * update get value by pagination

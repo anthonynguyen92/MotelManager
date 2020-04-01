@@ -12,6 +12,8 @@ using Microsoft.OpenApi.Models;
 using Microsoft.VisualBasic;
 using Motel.Application.Category.BillPayment;
 using Motel.Application.Category.CustomerRent;
+using Motel.Application.Category.FamilyGroups;
+using Motel.Application.Category.InfoRent;
 using Motel.Application.Category.RoomMotel;
 using Motel.Application.Category.User;
 using Motel.EntityDb.EF;
@@ -35,9 +37,7 @@ namespace Motel.BackEndApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers()
-                .AddFluentValidation(fx => fx.RegisterValidatorsFromAssemblyContaining<LoginRequestValidation>())
-                .AddFluentValidation(fx=> fx.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidation>());
+            services.AddControllers();
 
             services.AddDbContext<MotelDbContext>(option => option
                 .UseSqlServer(Configuration
@@ -80,34 +80,40 @@ namespace Motel.BackEndApi
                       }
                     });
             });
+            
+            #region ? Oauth2
+            // add Oauth2
+            //services.AddAuthentication(option =>
+            //{
+            //    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
-            services.AddAuthentication(option =>
-            {
-                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-            }).AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = Configuration.GetValue<string>("Tokens:Issuer"),
-                    ValidateAudience = true,
-                    ValidAudience = Configuration.GetValue<string>("Tokens:Issuer"),
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ClockSkew = System.TimeSpan.Zero,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
-                };
-            });
-
+            //}).AddJwtBearer(options =>
+            //{
+            //    options.RequireHttpsMetadata = false;
+            //    options.SaveToken = true;
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidIssuer = Configuration.GetValue<string>("Tokens:Issuer"),
+            //        ValidateAudience = true,
+            //        ValidAudience = Configuration.GetValue<string>("Tokens:Issuer"),
+            //        ValidateLifetime = true,
+            //        ValidateIssuerSigningKey = true,
+            //        ClockSkew = System.TimeSpan.Zero,
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+            //    };
+            //});
+            #endregion
+            
             // delcare DI
             services.AddTransient<IPublicBillPayment, PublicBillPayment>();
             services.AddTransient<IManageBillPayment, ManageBillPayment>();
             services.AddTransient<IManageCustomer, ManageCustomer>();
             services.AddTransient<IManageRoomMotel, ManageRoomMotel>();
+            services.AddTransient<IManageFamily, ManageFamily>();
+            services.AddTransient<IManageRoomMotel, ManageRoomMotel>();
+            services.AddTransient<IManageRent, ManageRent>();
 
             // Declare Login
             services.AddTransient<IUserService, UserService>();
