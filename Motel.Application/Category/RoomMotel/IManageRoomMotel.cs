@@ -7,7 +7,7 @@ namespace Motel.Application.Category.RoomMotel
     {
         // Create - new room
         Task<int> Create(RoomRequest request);
-        
+
         // Find - a room with id
         RoomRequest Find(int id);
 

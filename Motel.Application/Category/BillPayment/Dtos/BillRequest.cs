@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Motel.Application.Category.BillPayment.Dtos
 {
-    public class BillPaymentRequest
+    public class BillRequest
     {
         public string Id { get; set; }
         public int MonthRent { get; set; }

@@ -204,7 +204,7 @@ namespace Motel.Application.Category.RoomMotel
         }
 
         // Find - return a Room
-        RoomRequest IManageRoomMotel.Find(int id)
+        public RoomRequest Find(int id)
         {
             var result = _context.MotelRooms.Find(id);
             if (result == null) throw new MotelExceptions($"? Chang mày giảm cân đi chứ mập lắm rồi");

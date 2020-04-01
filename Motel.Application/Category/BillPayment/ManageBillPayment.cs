@@ -1,20 +1,36 @@
-﻿using Motel.Application.Category.BillPayment.Dtos;
+﻿using Microsoft.EntityFrameworkCore;
+using Motel.Application.Category.BillPayment.Dtos;
 using Motel.Application.Dtos;
 using Motel.EntityDb.EF;
 using Motel.EntityDb.Entities;
-using Motel.Utilities.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Motel.Application.Category.BillPayment
 {
     public class ManageBillPayment : IManageBillPayment
     {
         private readonly MotelDbContext _context;
+        private List<int> IDmotel
+        {
+            get
+            {
+                var result = from c in _context.MotelRooms
+                             select c.idMotel;
+                return result.ToList();
+            }
+        }
+        private List<string> IDBill
+        {
+            get
+            {
+                var result = from c in _context.InforBills
+                             select c.IdInforBill;
+                return result.ToList();
+            }
+        }
         public ManageBillPayment(MotelDbContext context)
         {
             _context = context;
@@ -24,9 +40,11 @@ namespace Motel.Application.Category.BillPayment
          * id is a value of motel room and u must get id for it
          */
         // POST: create a bill payment
-        public async Task<int> Create(BillPaymentRequest create, int id)
+        public async Task<int> Create(BillRequest create, int id)
         {
-            if (GetMotelRoomList().Contains(id) || string.IsNullOrEmpty(create.Id))
+            if (!IDmotel.Contains(create.IdMotel))
+                return 0;
+            if (!IDBill.Contains(create.Id))
             {
                 var bill = new InforBill()
                 {
@@ -42,33 +60,32 @@ namespace Motel.Application.Category.BillPayment
                     DateCreate = DateTime.Now,
                 };
                 _context.InforBills.Add(bill);
+                return await _context.SaveChangesAsync();
             }
-            else throw new MotelExceptions("Loi roi` day fix di @@");
-            return await _context.SaveChangesAsync();
+            return 0;
         }
 
         // DELETE: delete a bill payment
         public async Task<int> Delete(string id)
         {
             var bill = _context.InforBills.Find(id);
-            if (bill == null) throw new MotelExceptions($"Cant find bill {id} ");
+            if (bill == null) return 0;
             else _context.InforBills.Remove(bill);
             return await _context.SaveChangesAsync();
         }
 
         // GET Update - have more and more infor so u need add s.th func, example : update money ....
-        public async Task<int> Update(BillPaymentRequest update)
+        public async Task<int> Update(BillRequest update)
         {
-            // fix exception 
             var bill = _context.InforBills.Find(update.Id);
-            if (bill == null) throw new MotelExceptions($"Cant find bill id {update.Id} please enter id correct");
+            if (bill == null)
+                return 0;
             else
             {
-                if (!GetMotelRoomList().Contains(update.IdMotel))
-                    throw new MotelExceptions($" {update.IdMotel} cant match or dont exists {update.IdMotel} in database");
+                if (!IDmotel.Contains(update.IdMotel))
+                    return 0;
                 else
                 {
-                    bill.IdInforBill = update.Id;
                     bill.ElectricBill = update.ElectricBill;
                     bill.IdMotel = update.IdMotel;
                     bill.MonthRent = update.MonthRent;
@@ -77,14 +94,13 @@ namespace Motel.Application.Category.BillPayment
                     bill.WaterBill = update.WaterBill;
                     bill.WifiBill = update.WifiBill;
                     _context.InforBills.Update(bill);
-
+                    return await _context.SaveChangesAsync();
                 }
             }
-            return await _context.SaveChangesAsync();
         }
 
         //GET All Paging
-        public async Task<PagedViewModel<BillPaymentRequest>> GetAllPaging()
+        public async Task<PagedViewModel<BillRequest>> GetAllPaging()
         {
             #region need fix all
             ////1. Select join
@@ -123,9 +139,9 @@ namespace Motel.Application.Category.BillPayment
                           orderby c.IdInforBill
                           select c;
 
-            PagedViewModel<BillPaymentRequest> list = new PagedViewModel<BillPaymentRequest>()
+            PagedViewModel<BillRequest> list = new PagedViewModel<BillRequest>()
             {
-                Items = request.Select(x => new BillPaymentRequest
+                Items = request.Select(x => new BillRequest()
                 {
                     ElectricBill = x.ElectricBill,
                     Id = x.IdInforBill,
@@ -143,21 +159,13 @@ namespace Motel.Application.Category.BillPayment
             return list;
         }
 
-        // Find id Motel Room
-        public List<int> GetMotelRoomList()
-        {
-            var query = from c in _context.MotelRooms
-                        select c.idMotel;
-            return query.ToList();
-        }
-
         // GET Find an id bill - enter true id and it's will return if not => null
-        public async Task<BillPaymentRequest> Find(string id)
+        public async Task<BillRequest> Find(string id)
         {
             var result = await _context.InforBills.FindAsync(id);
-            if (result == null || string.IsNullOrEmpty(id))
+            if (result == null)
                 return null;
-            BillPaymentRequest value = new BillPaymentRequest()
+            var value = new BillRequest()
             {
                 ElectricBill = result.ElectricBill,
                 Id = result.IdInforBill,
@@ -173,9 +181,11 @@ namespace Motel.Application.Category.BillPayment
         //Update detail of Bill - Month
         public async Task<int> UpdateMonthRent(string id, int price)
         {
+            if (price <= 0)
+                return 0;
             var result = _context.InforBills.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null)
-                throw new MotelExceptions("Enter your value or value dont exist");
+            if (result == null)
+                return 0;
             else
             {
                 result.MonthRent = price;
@@ -188,9 +198,11 @@ namespace Motel.Application.Category.BillPayment
         //Update detail of Bill - Water
         public async Task<int> UpdateWaterBill(string id, decimal price)
         {
+            if (price <= 0)
+                return 0;
             var result = _context.InforBills.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null)
-                throw new MotelExceptions("Enter your value or value dont exist");
+            if (result == null)
+                return 0;
             else
             {
                 result.WaterBill = price;
@@ -202,9 +214,11 @@ namespace Motel.Application.Category.BillPayment
         //Update detail of Bill - Electric
         public async Task<int> UpdateElectricBill(string id, decimal price)
         {
+            if (price <= 0)
+                return 0;
             var result = _context.InforBills.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null)
-                throw new MotelExceptions("Enter your value or value dont exist");
+            if (result == null)
+                return 0;
             else
             {
                 result.ElectricBill = price;
@@ -216,9 +230,11 @@ namespace Motel.Application.Category.BillPayment
         //Update detail of Bill - Wifi
         public async Task<int> UpdateWifiBill(string id, decimal price)
         {
+            if (price <= 0)
+                return 0;
             var result = _context.InforBills.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null)
-                throw new MotelExceptions("Enter your value or value dont exist");
+            if (result == null)
+                return 0;
             else
             {
                 result.WifiBill = price;
@@ -230,9 +246,11 @@ namespace Motel.Application.Category.BillPayment
         //Update detail of Bill - Parking Fee
         public async Task<int> UpdateParkingFee(string id, decimal price)
         {
+            if (price <= 0)
+                return 0;
             var result = _context.InforBills.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null)
-                throw new MotelExceptions("Enter your value or value dont exist");
+            if (result == null)
+                return 0;
             else
             {
                 result.ParkingFee = price;
@@ -244,40 +262,44 @@ namespace Motel.Application.Category.BillPayment
         //Update detail of Bill - Room
         public async Task<int> UpdateRoomBil(string id, decimal price)
         {
+            if (price <= 0)
+                return 0;
             var result = _context.InforBills.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null)
-                throw new MotelExceptions("Enter your value or value dont exist");
+            if (result == null)
+                return 0;
             else
             {
                 result.RoomBill = price;
                 _context.Update(result);
+                return await _context.SaveChangesAsync();
             }
-            return await _context.SaveChangesAsync();
         }
 
         //Update detail of Bill - IDMotel
         public async Task<int> UpdateIdMotel(string id, int idmotel)
         {
-            var result = _context.InforBills.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null || !GetMotelRoomList().Contains(idmotel))
-                throw new MotelExceptions("Enter your value or value dont exist");
-            else
+            if (IDmotel.Contains(idmotel))
             {
-                result.ElectricBill = idmotel;
-                _context.Update(result);
+                var result = _context.InforBills.Find(id);
+                if (result != null)
+                {
+                    result.ElectricBill = idmotel;
+                    _context.Update(result);
+                    return await _context.SaveChangesAsync();
+                }
             }
-            return await _context.SaveChangesAsync();
+            return 0;
         }
 
         //Haven't been Payment motel
-        public async Task<PagedViewModel<BillPaymentRequest>> GetPayment()
+        public async Task<PagedViewModel<BillRequest>> GetPayment()
         {
             var result = from c in _context.InforBills
                          where c.Payment == false
                          select c;
-            var data = new PagedViewModel<BillPaymentRequest>()
+            var data = new PagedViewModel<BillRequest>()
             {
-                Items = result.Select(x => new BillPaymentRequest()
+                Items = result.Select(x => new BillRequest()
                 {
                     ElectricBill = x.ElectricBill,
                     Id = x.IdInforBill,
@@ -299,9 +321,7 @@ namespace Motel.Application.Category.BillPayment
         public async Task<bool> UpdatPayment(string id, decimal totalmoney)
         {
             var result = _context.InforBills.Find(id);
-            if (result == null || string.IsNullOrEmpty(id))
-                return false;
-            else
+            if (result != null)
             {
                 decimal value = result.ElectricBill + result.ParkingFee
                     + result.RoomBill + result.WaterBill + result.WifiBill;
@@ -311,22 +331,49 @@ namespace Motel.Application.Category.BillPayment
                     result.DatePay = DateTime.Now;
                     _context.InforBills.Update(result);
                     await _context.SaveChangesAsync();
+                    return true;
                 }
-                else
-                    return false;
             }
-            return true;
+            return false;
         }
-        
+
         // Get infobil payment
-        public async Task<PagedViewModel<BillPaymentRequest>> GetPaymentDone()
+        public async Task<PagedViewModel<BillRequest>> GetPaymentDone()
         {
             var result = from c in _context.InforBills
                          where c.Payment == true && c.DatePay != null
                          select c;
-            var data = new PagedViewModel<BillPaymentRequest>()
+            var data = new PagedViewModel<BillRequest>()
             {
-                Items = result.Select(x => new BillPaymentRequest()
+                Items = result.Select(x => new BillRequest()
+                {
+                    ElectricBill = x.ElectricBill,
+                    Id = x.IdInforBill,
+                    IdMotel = x.IdMotel,
+                    MonthRent = x.MonthRent,
+                    ParkingFee = x.ParkingFee,
+                    RoomBil = x.RoomBill,
+                    WaterBill = x.WaterBill,
+                    WifiBill = x.WifiBill,
+                    Payment = x.Payment,
+                    DateCreate = x.DateCreate,
+                }).ToList(),
+                TotalRecord = await result.CountAsync(),
+            };
+            return data;
+        }
+
+        // Get Info bill payment by id
+        public async Task<PagedViewModel<BillRequest>> GetByIDMotel(int value)
+        {
+            if (!IDmotel.Contains(value))
+                return null;
+            var result = from c in _context.InforBills
+                         where c.IdMotel == value
+                         select c;
+            var data = new PagedViewModel<BillRequest>()
+            {
+                Items = result.Select(x => new BillRequest()
                 {
                     ElectricBill = x.ElectricBill,
                     Id = x.IdInforBill,

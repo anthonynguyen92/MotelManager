@@ -1,6 +1,7 @@
 ﻿using Motel.Application.Category.BillPayment.Dtos;
 using Motel.Application.Category.CustomerRent.Dtos;
 using Motel.Application.Dtos;
+using Motel.EntityDb.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -46,6 +47,8 @@ namespace Motel.Application.Category.CustomerRent
         // Get all list by name 
         Task<PagedViewModel<CustomerRequest>> GetByFirstName(String name);
 
+        // Get id for user by find by name
+        string GetIDbyRequest(CustomerRequest request);
         /*
          * need a func which return a list of customer by using pagination.
          */

@@ -33,6 +33,9 @@ namespace Motel.Application.Category.FamilyGroups
         // Update - Identification with id input
         Task<int> UpdateIdentification(string id, string idfi);
 
+        // Update - Id
+        Task<int> UpdateUser(string id, string iduser);
+
         // Get All list Customer - who rents
         Task<PagedViewModel<FamilyRequest>> GettAll();
 

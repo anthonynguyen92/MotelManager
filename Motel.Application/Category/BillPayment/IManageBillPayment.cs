@@ -10,23 +10,23 @@ namespace Motel.Application.Category.BillPayment
 {
     public interface IManageBillPayment
     {
-        Task<int> Create(BillPaymentRequest create,int id);
-        Task<int> Update(BillPaymentRequest update);
+        Task<int> Create(BillRequest create,int id);
+        Task<int> Update(BillRequest update);
         Task<int> UpdateMonthRent(string id,int price);
         Task<int> UpdateWaterBill(string id, decimal price);
         Task<int> UpdateElectricBill(string id, decimal price);
         Task<int> UpdateWifiBill(string id, decimal price);
         Task<int> UpdateParkingFee(string id, decimal price);
         Task<int> UpdateRoomBil(string id, decimal price);
-        Task<int> UpdateIdMotel(string id, int idmotel);
+        Task<int> UpdateIdMotel(string id, int idmotel);    
         Task<int> Delete(string id);
-        Task<BillPaymentRequest> Find(string id);
-        Task<PagedViewModel<BillPaymentRequest>> GetAllPaging();
-        List<int> GetMotelRoomList();
-        Task<PagedViewModel<BillPaymentRequest>> GetPayment();
-        Task<bool> UpdatPayment(string id,decimal totalmoney);
-        Task<PagedViewModel<BillPaymentRequest>> GetPaymentDone();
-    
+        Task<BillRequest> Find(string id);
+        Task<PagedViewModel<BillRequest>> GetAllPaging();
+        Task<PagedViewModel<BillRequest>> GetPayment();
+        Task<bool> UpdatPayment(string id,decimal totalmoney);  
+        Task<PagedViewModel<BillRequest>> GetPaymentDone();
+        Task<PagedViewModel<BillRequest>> GetByIDMotel(int value);
+
         // update + Add + fix some thing but i dont know :))) 
     }
 }

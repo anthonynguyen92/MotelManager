@@ -4,6 +4,7 @@ using Motel.Application.Dtos;
 using Motel.EntityDb.EF;
 using Motel.EntityDb.Entities;
 using Motel.Utilities.Exceptions;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,18 +13,26 @@ namespace Motel.Application.Category.CustomerRent
     public class ManageCustomer : IManageCustomer
     {
         private readonly MotelDbContext _context;
+        
         public ManageCustomer(MotelDbContext context)
         {
             _context = context;
         }
-
+        private List<string> IDCustomer
+        {
+            get
+            {
+                var result = from c in _context.Customers
+                             select c.IDuser;
+                return result.ToList();
+            }
+        }
+ 
         // valid email - customer - identification - phone number
         public async Task<int> Create(CustomerRequest customer)
         {
-            var resultid = _context.Customers.Find(customer.IDuser);
-            //var resultiden = _context.Customers.Find(customer.Identification);
-            if (resultid != null)// || resultiden == null)
-                throw new MotelExceptions($"{customer.Identification} or ${customer.IDuser} exist please enter another id");
+            if (IDCustomer.Contains(customer.IDuser))
+                return 0;
             else
             {
                 var kq = new Customer()
@@ -47,7 +56,7 @@ namespace Motel.Application.Category.CustomerRent
         public async Task<int> Delete(string id)
         {
             var result = _context.Customers.Find(id);
-            if (result == null) throw new MotelExceptions("Your id dont exist, please enter your trust id");
+            if (result == null) return 0;
             else
                 _context.Customers.Remove(result);
             return await _context.SaveChangesAsync();
@@ -57,7 +66,7 @@ namespace Motel.Application.Category.CustomerRent
         public CustomerRequest Find(string id)
         {
             var result = _context.Customers.Find(id);
-            if (result == null) throw new MotelExceptions("Your user dont have exist.");
+            if (result == null) return null;
             else
             {
                 CustomerRequest cs = new CustomerRequest()
@@ -105,7 +114,7 @@ namespace Motel.Application.Category.CustomerRent
         public async Task<int> Update(string id, CustomerRequest customer)
         {
             var request = _context.Customers.Find(customer.IDuser);
-            if (request == null) throw new MotelExceptions("Chiu den ca id cung nhap sai thi chiu @@@@@@");
+            if (request == null) return 0; 
             else
             {
                 request.LastName = customer.LastName;
@@ -125,8 +134,8 @@ namespace Motel.Application.Category.CustomerRent
         public async Task<int> UpdateAddress(string id, string address)
         {
             var result = _context.Customers.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null)
-                throw new MotelExceptions("just an id but you still enter wrong? need review yourself!");
+            if (result == null)
+                return 0;
             else
             {
                 result.Address = address;
@@ -139,8 +148,8 @@ namespace Motel.Application.Category.CustomerRent
         public async Task<int> UpdateEmail(string id, string email)
         {
             var result = _context.Customers.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null)
-                throw new MotelExceptions("just an id but you still enter wrong? need review yourself!");
+            if (result == null)
+                return 0;
             else
             {
                 result.Email = email;
@@ -153,8 +162,8 @@ namespace Motel.Application.Category.CustomerRent
         public async Task<int> UpdateIdentification(string id, string idfi)
         {
             var result = _context.Customers.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null)
-                throw new MotelExceptions("just an id but you still enter wrong? need review yourself!");
+            if (result == null)
+                return 0;
             else
             {
                 result.Identification = idfi;
@@ -167,8 +176,8 @@ namespace Motel.Application.Category.CustomerRent
         public async Task<int> UpdateName(string id, string fname, string lname)
         {
             var result = _context.Customers.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null)
-                throw new MotelExceptions("just an id but you still enter wrong? need review yourself!");
+            if (result == null)
+                return 0;
             else
             {
                 result.FirstName = fname;
@@ -182,8 +191,8 @@ namespace Motel.Application.Category.CustomerRent
         public async Task<int> UpdatePhoneNumber(string id, string number)
         {
             var result = _context.Customers.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null)
-                throw new MotelExceptions("just an id but you still enter wrong? need review yourself!");
+            if (result == null)
+                return 0;
             else
             {
                 result.PhoneNumber = number;
@@ -196,8 +205,8 @@ namespace Motel.Application.Category.CustomerRent
         public async Task<int> UpdateSex(string id, string sex)
         {
             var result = _context.Customers.Find(id);
-            if (string.IsNullOrEmpty(id) || result == null)
-                throw new MotelExceptions("just an id but you still enter wrong? need review yourself!");
+            if (result == null)
+                return 0;
             else
             {
                 result.Sex = sex;
@@ -209,8 +218,6 @@ namespace Motel.Application.Category.CustomerRent
         // Get Customer by Name - no controller yet.
         public async Task<PagedViewModel<CustomerRequest>> GetByFirstName(string name)
         {
-            if (string.IsNullOrEmpty(name))
-                return await GettAll();
             var request = from c in _context.Customers
                          where c.FirstName.Contains(name)
                          select c;
@@ -232,5 +239,7 @@ namespace Motel.Application.Category.CustomerRent
             };
             return list;
         }
+
+        public string GetIDbyRequest(CustomerRequest request) =>  request.IDuser;
     }
 }
