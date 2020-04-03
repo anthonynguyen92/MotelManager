@@ -20,3 +20,4 @@
 public IActionResult Index()=>View();
 </code></pre>
 
+## 4. Hiện tại đã xong api và chỉ còn front end chưa có nên tạm thời pj sẽ tập trung làm front -end
