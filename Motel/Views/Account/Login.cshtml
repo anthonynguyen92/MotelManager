@@ -1,0 +1,96 @@
+﻿@model Motel.Models.User
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="~/lib/images/icons/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/font/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/font/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="~/css/main.css">
+    <link rel="stylesheet" type="text/css" href="~/css/util.css">
+</head>
+<body>
+
+    <div class="limiter">
+        <div class="container-login100 backgroundimage" style="background-image:url('/lib/images/bg-01.jpg')">
+            <div class="wrap-login100 p-t-30 p-b-50">
+                <span class="login100-form-title p-b-41">
+                    Account Login
+                </span>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @*<div class="row">
+                        You are Logged in as
+                        <span style="font-size:large;color:forestgreen;">
+                            @User.Identity.Name
+                        </span>
+                    </div>*@
+                    <form class="login100-form validate-form p-b-33 p-t-5">
+                        <div class="text-center">Your are Logged in as <span>@User.Identity.Name</span></div>
+                        <div class="container-login100-form-btn m-t-32">
+                            @Html.ActionLink("Log Off", "Logoff",
+                       "User", null, new { @class = "btn btn-primary btn-lg rph-login-button" })
+                        </div>
+                    </form>
+                    @*<div class="row" style="padding-top:50px;">
+                       
+                    </div>*@
+                }
+                else
+                {
+                    <form asp-action="Login" class="login100-form validate-form p-b-33 p-t-5" method="post">
+                        <div>
+                            @Html.AntiForgeryToken()
+                            <div class="wrap-input100 validate-input" data-validate="Enter username">
+                                <input class="input100" asp-for="username" placeholder="User name" value="">
+                                <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+                            </div>
+
+                            <div class="wrap-input100 validate-input" data-validate="Enter password">
+                                <input class="input100" type="password" asp-for="password" placeholder="Password" value="">
+                                <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                            </div>
+
+                            <div class="container-login100-form-btn m-t-32">
+                                <button class="login100-form-btn" type="submit" value="Login">
+                                    Login
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <div id="dropDownSelect1"></div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/vendor/animsition/js/animsition.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/popper.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/vendor/select2/select2.min.js"></script>
+    <script src="~/lib/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/lib/vendor/daterangepicker/daterangepicker.js"></script>
+    <script src="~/lib/vendor/countdowntime/countdowntime.js"></script>
+    <script src="~/js/main.js"></script>
+
+</body>
+</html>
