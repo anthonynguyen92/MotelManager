@@ -63,26 +63,10 @@ namespace Motel.Application.Category.CustomerRent
         }
 
         // Find Customer by id
-        public CustomerRequest Find(string id)
+        public async Task<Customer> Find(string id)
         {
-            var result = _context.Customers.Find(id);
-            if (result == null) return null;
-            else
-            {
-                CustomerRequest cs = new CustomerRequest()
-                {
-                    Address = result.Address,
-                    Birthdate = result.Birthdate,
-                    Email = result.Email,
-                    FirstName = result.FirstName,
-                    Identification = result.Identification,
-                    IDuser = result.IDuser,
-                    LastName = result.LastName,
-                    PhoneNumber = result.PhoneNumber,
-                    Sex = result.Sex,
-                };
-                return cs;
-            }
+            var result = await _context.Customers.FindAsync(id);
+            return result;
         }
 
         // Get all Customer

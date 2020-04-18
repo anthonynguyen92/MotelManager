@@ -1,4 +1,5 @@
 ﻿using Motel.Application.Category.RoomMotel.Dtos;
+using Motel.Application.Dtos;
 using System.Threading.Tasks;
 
 namespace Motel.Application.Category.RoomMotel
@@ -33,13 +34,13 @@ namespace Motel.Application.Category.RoomMotel
         Task<int> UpdateArea(int id, int area);
         
         // Get - All rooms
-        Task<ViewModelRoom<Room>> GetAll();
+        Task<PagedViewModel<Room>> GetAll();
         
         // Get - All Empty rooms
-        Task<ViewModelRoom<Room>> GetEmptyRoomAsync();  
+        Task<PagedViewModel<Room>> GetEmptyRoomAsync();  
         
         // Get - All room with Name Room
-        Task<ViewModelRoom<Room>> GetRoomByName(string name);
+        Task<PagedViewModel<Room>> GetRoomByName(string name);
 
     }
 }

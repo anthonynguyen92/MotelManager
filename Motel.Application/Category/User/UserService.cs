@@ -26,19 +26,19 @@ namespace Motel.Application.Category.User
             _config = config;
         }
 
-        public async Task<string> Authentication(LoginRequest request)
+        public async Task<string> Authentication(string username,string password)
         {
-            var user = await _userManager.FindByNameAsync(request.UserName);
+            var user = await _userManager.FindByNameAsync(username);
 
-            if (user == null) throw new MotelExceptions("can find");
+            if (user == null) return null;
 
-            var result = await _signManager.PasswordSignInAsync(request.UserName, request.PassWord, true, true);
+            var result = await _signManager.PasswordSignInAsync(username, password, true, true);
 
             if (!result.Succeeded)
                 return null;
             var roles = await _userManager.GetRolesAsync(user);
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourKey-2374-OFFKDI940NG7:56753253-tyuw-5769-0921-kfirox29zoxv"));
             var credis = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
@@ -46,7 +46,6 @@ namespace Motel.Application.Category.User
                 new Claim(ClaimTypes.Email,user.Email),
                 new Claim(ClaimTypes.GivenName,user.FirstName),
                 new Claim(ClaimTypes.Role, string.Join(";",roles)),
-                new Claim(ClaimTypes.Name, request.UserName)
             };
 
             var tokenhandle = new JwtSecurityTokenHandler();
@@ -76,5 +75,6 @@ namespace Motel.Application.Category.User
                 return true;
             return false;
         }
+        
     }
 }

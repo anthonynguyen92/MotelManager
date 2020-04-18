@@ -12,6 +12,6 @@ namespace Motel.Application.Category.RoomMotel.Dtos
         public int Toilet { get; set; }
         public int Area { get; set; }
         public bool Status { get; set; }
-        public decimal Payment { get; set; }
+        public decimal Payment { get; set; }    
     }
 }

@@ -21,7 +21,7 @@ namespace Motel.Application.Category.CustomerRent
         Task<int> Delete(string id);
         
         // Find - a customer with id input 
-        CustomerRequest Find(String id);
+        Task<Customer> Find(String id);
         
         // Update - first name && last name with id customer input
         Task<int> UpdateName(string id,string fname,string lname);
@@ -52,6 +52,5 @@ namespace Motel.Application.Category.CustomerRent
         /*
          * need a func which return a list of customer by using pagination.
          */
-         
     }
 }

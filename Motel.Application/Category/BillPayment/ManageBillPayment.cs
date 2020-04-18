@@ -17,6 +17,7 @@ namespace Motel.Application.Category.BillPayment
         {
             get
             {
+                // tại vì nó đọc dữ liệu từ sever trực tiếp luôn nên nó sẽ là iqueryable
                 var result = from c in _context.MotelRooms
                              select c.idMotel;
                 return result.ToList();
