@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Motel.Application.Category.BillPayment;
 using Motel.Application.Category.BillPayment.Dtos;
 using Motel.Application.Dtos;
-using Motel.EntityDb.Entities;
+using Motel.Utilities.Exceptions;
+using System;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Motel.BackEndApi.Controllers
 {
@@ -19,12 +17,10 @@ namespace Motel.BackEndApi.Controllers
     public class BillPaymentController : ControllerBase
     {
         private readonly IManageBillPayment _manage;
-        private IPublicBillPayment _publicpayment;
 
-        public BillPaymentController(IManageBillPayment manage, IPublicBillPayment publicpayment)
+        public BillPaymentController(IManageBillPayment manage)
         {
             _manage = manage;
-            _publicpayment = publicpayment;
         }
 
         [HttpGet("Test")]
@@ -70,8 +66,12 @@ namespace Motel.BackEndApi.Controllers
         {
             var result = await _manage.Find(find);
             if (result == null)
-                return BadRequest("cant find bill");
-            return Ok(result);
+                throw new MotelExceptions(HttpStatusCode.NotFound, $"Dd: {find} not found");
+            ThreadPool.QueueUserWorkItem(delegate
+            {
+                //??
+            });
+            return new OkObjectResult(result);
         }
 
         // PUT - Update Month Rent
@@ -173,7 +173,7 @@ namespace Motel.BackEndApi.Controllers
             return BadRequest();
 
         }
-    
+
         // GET payment - done 
         [HttpGet("Payment-done")]
         public async Task<IActionResult> GetPaymentDone()
@@ -183,7 +183,7 @@ namespace Motel.BackEndApi.Controllers
                 return Ok("good");
             return Ok(reslut);
         }
-        
+
         // GET by id motel
         [HttpGet("Get-Motel")]
         public async Task<IActionResult> GetById(int value)

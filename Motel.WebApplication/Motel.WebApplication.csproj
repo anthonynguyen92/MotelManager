@@ -4,8 +4,10 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
-
   <ItemGroup>
+    <ProjectReference Include="..\Motel.Application\Motel.Application.csproj" />
+    <ProjectReference Include="..\Motel.EntityDb\Motel.EntityDb.csproj" />
+    <ProjectReference Include="..\Motel.Utilities\Motel.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

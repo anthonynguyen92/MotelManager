@@ -20,11 +20,11 @@ namespace Motel.BackEndApi.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody]LoginRequest request)
+        public async Task<IActionResult> Login([FromBody]string username,string password)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _userService.Authentication(request);
+            var result = await _userService.Authentication(username,password);
             if (string.IsNullOrEmpty(result))
             {
                 return BadRequest("????");

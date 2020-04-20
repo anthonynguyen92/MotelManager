@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿  <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -25,8 +25,10 @@
     <ProjectReference Include="..\Motel.Application\Motel.Application.csproj" />
     <ProjectReference Include="..\Motel.EntityDb\Motel.EntityDb.csproj" />
     <ProjectReference Include="..\Motel.Utilities\Motel.Utilities.csproj" />
-    <ProjectReference Include="..\Motel.ViewModel\Motel.ViewModel.csproj" />
-    <ProjectReference Include="..\Motel.WebApplication\Motel.WebApplication.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Log\" />
   </ItemGroup>
 
 </Project>

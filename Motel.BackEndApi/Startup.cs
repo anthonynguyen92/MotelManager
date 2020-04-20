@@ -7,11 +7,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.VisualBasic;
 using Motel.Application.Category.BillPayment;
 using Motel.Application.Category.CustomerRent;
+using Motel.Application.Category.CustomerRent.Dtos;
 using Motel.Application.Category.FamilyGroups;
 using Motel.Application.Category.InfoRent;
 using Motel.Application.Category.RoomMotel;
@@ -19,6 +21,8 @@ using Motel.Application.Category.User;
 using Motel.EntityDb.EF;
 using Motel.EntityDb.Entities;
 using Motel.Utilities.Contains;
+using Motel.Utilities.Exceptions;
+using Motel.Utilities.Helper;
 using Motel.ViewModel.System.User;
 using System.Collections.Generic;
 using System.Text;
@@ -80,32 +84,32 @@ namespace Motel.BackEndApi
                       }
                     });
             });
-            
-            #region ? Oauth2
-            // add Oauth2
-            //services.AddAuthentication(option =>
-            //{
-            //    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
-            //}).AddJwtBearer(options =>
-            //{
-            //    options.RequireHttpsMetadata = false;
-            //    options.SaveToken = true;
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuer = true,
-            //        ValidIssuer = Configuration.GetValue<string>("Tokens:Issuer"),
-            //        ValidateAudience = true,
-            //        ValidAudience = Configuration.GetValue<string>("Tokens:Issuer"),
-            //        ValidateLifetime = true,
-            //        ValidateIssuerSigningKey = true,
-            //        ClockSkew = System.TimeSpan.Zero,
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
-            //    };
-            //});
+            #region ? Oauth2
+            //add Oauth2
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = Configuration.GetValue<string>("Tokens:Issuer"),
+                    ValidateAudience = true,
+                    ValidAudience = Configuration.GetValue<string>("Tokens:Issuer"),
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = System.TimeSpan.Zero,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                };
+            });
             #endregion
-            
+
             // delcare DI
             services.AddTransient<IPublicBillPayment, PublicBillPayment>();
             services.AddTransient<IManageBillPayment, ManageBillPayment>();
@@ -121,11 +125,22 @@ namespace Motel.BackEndApi
             services.AddTransient<RoleManager<AppRoles>, RoleManager<AppRoles>>();
             services.AddTransient<IValidatorInterceptor, MyDefaultInterceptor>();
             //services.AddMvcCore().AddFluentValidation();
+
+            // DC
+            services.AddHttpClient<ISelfHttpClient, SelfHttpClient>();
+
+            //setting
+            services.Configure<CustomerSettings>(Configuration.GetSection("Customers"));
+
+            // DC new options
+            //services.AddScoped<ICustomerReponsitory, CustomerCacheReponsitory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILoggerFactory loggerFactory)
         {
+           
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -136,6 +151,10 @@ namespace Motel.BackEndApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            loggerFactory.AddFile("Log/log.txt");
+            app.UseMiddleware<ExceptionsHandlingMiddleware>();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

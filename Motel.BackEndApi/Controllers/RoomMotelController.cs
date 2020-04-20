@@ -24,6 +24,15 @@ namespace Motel.BackEndApi.Controllers
         [HttpGet("Test")]
         public IActionResult Test() => Ok();
         
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _manage.Delete(id);
+            if (result != 0)
+                return Ok("delete OK");
+            return BadRequest("??");
+        }
+
         [HttpPost("Create")]
         public async Task<IActionResult> Create(RoomRequest request)
         {
@@ -55,8 +64,6 @@ namespace Motel.BackEndApi.Controllers
         public async Task<IActionResult> UpdateName(int id ,string name)
         {
             var result = await _manage.UpdateName(id, name);
-            if (result == 0)
-                throw new MotelExceptions("bad request");
             return Ok("success");
         }
 
@@ -64,8 +71,6 @@ namespace Motel.BackEndApi.Controllers
         public async Task<IActionResult> UpdatePayment(int id,decimal price)
         {
             var result = await _manage.UpdatePayment(id, price);
-            if (result == 0)
-                throw new MotelExceptions("bad reques");
             return Ok("SUccess");
         }
 
@@ -73,8 +78,6 @@ namespace Motel.BackEndApi.Controllers
         public async Task<IActionResult> UpdateStatus(int id)
         {
             var result = await _manage.UpdateStatus(id);
-            if (result == 0)
-                throw new MotelExceptions("bad reques");
             return Ok("SUccess");
         }
 
@@ -82,8 +85,6 @@ namespace Motel.BackEndApi.Controllers
         public async Task<IActionResult> UpdateInfor(int id, int bedroom,int toilet) 
         {
             var result = await _manage.UpdateInfor(id, bedroom,toilet);
-            if (result == 0)
-                throw new MotelExceptions("bad reques");
             return Ok("SUccess");
         }
 
@@ -91,8 +92,6 @@ namespace Motel.BackEndApi.Controllers
         public async Task<IActionResult> UpdateArea(int id, int square)
         {
             var result = await _manage.UpdateArea(id, square);
-            if (result == 0)
-                throw new MotelExceptions("bad reques");
             return Ok("SUccess");
         }
 

@@ -10,12 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Motel.Application.Category.BillPayment;
-using Motel.Application.Category.CustomerRent;
-using Motel.Application.Category.FamilyGroups;
-using Motel.Application.Category.InfoRent;
-using Motel.Application.Category.RoomMotel;
-using Motel.Application.Category.User;
 using Motel.EntityDb.EF;
 using Motel.EntityDb.Entities;
 using Motel.Utilities.Contains;
@@ -97,7 +91,7 @@ namespace Motel
             //services.AddTransient<IManageRent, ManageRent>();
 
             // Declare Login
-            services.AddTransient<IUserService, UserService>();
+            //services.AddTransient<IUserService, UserService>();
 
         }
 

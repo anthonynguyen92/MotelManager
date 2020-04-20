@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Motel.Application.Category.CustomerRent;
 using Motel.Application.Category.CustomerRent.Dtos;
+using Motel.Utilities.Exceptions;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Motel.BackEndApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class CustomerController : ControllerBase
     {
         private readonly IManageCustomer _customer;
@@ -140,5 +142,21 @@ namespace Motel.BackEndApi.Controllers
          * update - modelivalid - 
          * update get value by pagination
          */
+
+        [HttpGet("GetUser")]
+        public async Task<IActionResult> Finduser(string id)
+        {
+            var result = await _customer.Find(id);
+            if (result == null)
+            {
+                string message = $"{id} does not have exists in database";
+                throw new MotelExceptions(HttpStatusCode.NotFound, "ID not found ", message);
+                ThreadPool.QueueUserWorkItem(delegate
+                {
+                    // something?
+                });
+            }
+            return new OkObjectResult(result);
+        }
     }
 }
