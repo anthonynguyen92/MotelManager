@@ -33,22 +33,13 @@
                 </span>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    @*<div class="row">
-                        You are Logged in as
-                        <span style="font-size:large;color:forestgreen;">
-                            @User.Identity.Name
-                        </span>
-                    </div>*@
                     <form class="login100-form validate-form p-b-33 p-t-5">
                         <div class="text-center">Your are Logged in as <span>@User.Identity.Name</span></div>
                         <div class="container-login100-form-btn m-t-32">
                             @Html.ActionLink("Log Off", "Logoff",
-                       "User", null, new { @class = "btn btn-primary btn-lg rph-login-button" })
+                       "Account", null, new { @class = "btn btn-primary btn-lg rph-login-button" })
                         </div>
                     </form>
-                    @*<div class="row" style="padding-top:50px;">
-                       
-                    </div>*@
                 }
                 else
                 {

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Motel.Application.Category.User;
 using Motel.EntityDb.EF;
 using Motel.EntityDb.Entities;
 using Motel.Utilities.Contains;
@@ -39,11 +40,6 @@ namespace Motel
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             var secretket = Encoding.UTF8.GetBytes("YourKey-2374-OFFKDI940NG7:56753253-tyuw-5769-0921-kfirox29zoxv");
-
-            services.ConfigureApplicationCookie(opt =>
-            {
-                opt.LoginPath = "/User/Login";
-            });
 
             services.AddAuthentication(auth =>
             {
@@ -91,7 +87,7 @@ namespace Motel
             //services.AddTransient<IManageRent, ManageRent>();
 
             // Declare Login
-            //services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserService, UserService>();
 
         }
 
